@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img">
+<defs>
+<linearGradient id="bgc0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b0c12"/><stop offset="1" stop-color="#11131c"/></linearGradient>
+<radialGradient id="glc0" cx="843.5770325362682" cy="485.2040746062994" r="520" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7C3AED" stop-opacity=".55"/><stop offset=".55" stop-color="#A78BFA" stop-opacity=".12"/><stop offset="1" stop-color="#7C3AED" stop-opacity="0"/></radialGradient>
+<linearGradient id="acc0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+<pattern id="grc0" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".045"/></pattern>
+<filter id="blc0" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="100%" height="100%" fill="url(#bgc0)"/>
+<rect width="100%" height="100%" fill="url(#grc0)"/>
+<rect width="100%" height="100%" fill="url(#glc0)"/>
+
+<g filter="url(#blc0)" opacity=".55"><circle cx="785.0535048451275" cy="311.58616062253714" r="90" fill="#7C3AED"/></g>
+<rect x="265.05350484512746" y="171.58616062253714" width="560" height="430" rx="18" fill="#161925" fill-opacity=".86" stroke="#ffffff" stroke-opacity=".09" />
+<circle cx="293.05350484512746" cy="199.58616062253714" r="6" fill="#fff" fill-opacity=".25"/><circle cx="313.05350484512746" cy="199.58616062253714" r="6" fill="#fff" fill-opacity=".18"/><circle cx="333.05350484512746" cy="199.58616062253714" r="6" fill="#fff" fill-opacity=".12"/>
+<rect x="297.05350484512746" y="241.58616062253714" width="220" height="150" rx="14" fill="#0e1018" stroke="#fff" stroke-opacity=".07"/>
+<g transform="translate(370.05350484512746 271.58616062253714)" fill="none" stroke="#A78BFA" stroke-width="5" stroke-linejoin="round"><path d="M0 0h44l22 22v66H0z"/><path d="M44 0v22h22"/><path d="M14 44h38M14 58h38M14 72h24" stroke-linecap="round"/></g>
+<rect x="545.0535048451275" y="251.58616062253714" width="182.28641346283257" height="10" rx="5" fill="url(#acc0)" fill-opacity="0.9"/><rect x="545.0535048451275" y="277.58616062253714" width="112.24053965136409" height="10" rx="5" fill="#ffffff" fill-opacity="0.1913129385188222"/><rect x="545.0535048451275" y="303.58616062253714" width="134.31691686809063" height="10" rx="5" fill="#ffffff" fill-opacity="0.23574088151566686"/><rect x="545.0535048451275" y="329.58616062253714" width="147.41839769482613" height="10" rx="5" fill="#ffffff" fill-opacity="0.14661659138277175"/>
+<rect x="297.05350484512746" y="421.58616062253714" width="496" height="140" rx="14" fill="#0e1018" stroke="#7C3AED" stroke-opacity=".35"/>
+<rect x="321.05350484512746" y="449.58616062253714" width="364.0637159878388" height="10" rx="5" fill="url(#acc0)" fill-opacity="0.9"/><rect x="321.05350484512746" y="475.58616062253714" width="300.2571790870279" height="10" rx="5" fill="#ffffff" fill-opacity="0.23908077775035055"/><rect x="321.05350484512746" y="501.58616062253714" width="356.77500890754163" height="10" rx="5" fill="#ffffff" fill-opacity="0.18790142800193282"/><rect x="321.05350484512746" y="527.5861606225371" width="236.14721326343712" height="10" rx="5" fill="#ffffff" fill-opacity="0.22318578435573727"/>
+<rect x="717.551590334624" y="501.58616062253714" width="300" height="120" rx="18" fill="#161925" fill-opacity=".86" stroke="#ffffff" stroke-opacity=".09" stroke="#7C3AED" stroke-opacity=".5"/>
+<g transform="translate(743.5396032501012 521.5861606225371)" fill="url(#acc0)"><path d="M40 0l8 30 30 10-30 10-8 30-8-30L2 40l30-10z"/></g>
+<rect x="826.0096245538443" y="541.5861606225371" width="130" height="12" rx="6" fill="#fff" fill-opacity=".5"/>
+<rect x="833.1121387984604" y="567.5861606225371" width="90" height="10" rx="5" fill="#fff" fill-opacity=".2"/>
+</svg>

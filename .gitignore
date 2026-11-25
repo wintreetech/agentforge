@@ -1,0 +1,16 @@
+node_modules/
+.next/
+out/
+dist/
+coverage/
+.env
+.env.local
+.env.*.local
+apps/web/.data/
+apps/web/test-results/
+apps/web/playwright-report/
+apps/api/.venv/
+__pycache__/
+.pytest_cache/
+*.log
+.DS_Store

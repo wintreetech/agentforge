@@ -1,0 +1,1 @@
+Hello from the MCP kit sandbox directory. The read_file tool can read this file.

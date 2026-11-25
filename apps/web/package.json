@@ -1,0 +1,43 @@
+{
+  "name": "@agentforge/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3100",
+    "build": "next build",
+    "start": "next start --hostname 0.0.0.0 --port ${PORT:-3100}",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@agentforge/ai-engine": "*",
+    "@agentforge/catalog": "*",
+    "@agentforge/commerce": "*",
+    "@agentforge/product-registry": "*",
+    "@xyflow/react": "^13.0.3",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.80.0",
+    "motion": "^14.14.0",
+    "next": "16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "recharts": "^3.11.1",
+    "tailwind-merge": "^3.7.1",
+    "unpdf": "^2.2.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.3.2",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.6",
+    "tailwindcss": "^4.3.5",
+    "typescript": "~5.9.3"
+  }
+}
+

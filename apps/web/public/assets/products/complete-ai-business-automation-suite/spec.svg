@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img">
+<defs>
+<linearGradient id="bgs1m5zc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b0c12"/><stop offset="1" stop-color="#11131c"/></linearGradient>
+<radialGradient id="gls1m5zc" cx="377.19520796090364" cy="158.555745780468" r="520" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F59E0B" stop-opacity=".55"/><stop offset=".55" stop-color="#FCD34D" stop-opacity=".12"/><stop offset="1" stop-color="#F59E0B" stop-opacity="0"/></radialGradient>
+<linearGradient id="acs1m5zc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FCD34D"/><stop offset="1" stop-color="#F59E0B"/></linearGradient>
+<pattern id="grs1m5zc" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".045"/></pattern>
+<filter id="bls1m5zc" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="100%" height="100%" fill="url(#bgs1m5zc)"/>
+<rect width="100%" height="100%" fill="url(#grs1m5zc)"/>
+<rect width="100%" height="100%" fill="url(#gls1m5zc)"/>
+<text x="120" y="150" font-size="38" font-weight="700" fill="#f4f5f8" font-family="Inter, 'Segoe UI', system-ui, sans-serif">Inputs → Outputs</text><rect x="80" y="210" width="400" height="470" rx="18" fill="#161925" fill-opacity=".86" stroke="#ffffff" stroke-opacity=".09" /><text x="112" y="262" font-size="20" fill="#8a90a6" font-family="Inter, 'Segoe UI', system-ui, sans-serif" letter-spacing="3">INPUTS</text><g transform="translate(112 296)"><rect width="336" height="56" rx="12" fill="#0f111a" stroke="#fff" stroke-opacity=".07"/><circle cx="24" cy="28" r="7" fill="#F59E0B"/><text x="44" y="34" font-size="17" fill="#e5e8f0" font-family="Inter, 'Segoe UI', system-ui, sans-serif">Business systems</text></g><circle cx="600" cy="445" r="58" fill="#141724" stroke="url(#acs1m5zc)" stroke-width="3"/><g transform="translate(560 405)" fill="url(#acs1m5zc)"><path d="M40 0l8 30 30 10-30 10-8 30-8-30L2 40l30-10z"/></g><path d="M520 445h-40M720 445h-40" stroke="#FCD34D" stroke-width="3" stroke-dasharray="6 8"/><rect x="720" y="210" width="400" height="470" rx="18" fill="#161925" fill-opacity=".86" stroke="#ffffff" stroke-opacity=".09" /><text x="752" y="262" font-size="20" fill="#8a90a6" font-family="Inter, 'Segoe UI', system-ui, sans-serif" letter-spacing="3">OUTPUTS</text><g transform="translate(752 296)"><rect width="336" height="56" rx="12" fill="#0f111a" stroke="#fff" stroke-opacity=".07"/><circle cx="24" cy="28" r="7" fill="#F59E0B"/><text x="44" y="34" font-size="17" fill="#e5e8f0" font-family="Inter, 'Segoe UI', system-ui, sans-serif">Automated operations</text></g>
+</svg>

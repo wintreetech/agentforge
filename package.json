@@ -1,0 +1,33 @@
+{
+  "name": "agentforge-ai",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AgentForge AI — marketplace for AI tools, agents, workflows and agentic business systems.",
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.6"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @agentforge/web",
+    "build": "npm run build -w @agentforge/web",
+    "start": "npm run start -w @agentforge/web",
+    "typecheck": "npm run typecheck -w @agentforge/web",
+    "lint": "npm run lint -w @agentforge/web",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "npm run e2e -w @agentforge/web",
+    "assets": "node scripts/generate-assets.mjs",
+    "seed:sql": "node scripts/generate-seed-sql.mjs",
+    "make-admin": "node scripts/make-admin.mjs",
+    "audit:deps": "npm audit --omit=dev"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.6.0",
+    "@electric-sql/pglite-pgvector": "^0.1.0",
+    "typescript": "~5.9.3",
+    "vitest": "^5.1.2"
+  }
+}
