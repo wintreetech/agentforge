@@ -41,6 +41,16 @@ export function SiteFooter() {
         </div>
         <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-[12.5px] text-subtle sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} AgentForge AI. Prices in EUR, excluding VAT where applicable.</p>
+          <div className="flex shrink-0 items-center gap-2" aria-label="Card payment brands">
+            <svg role="img" aria-label="Visa" viewBox="0 0 64 40" className="h-8 w-[51px] rounded border border-slate-200 bg-white">
+              <text x="32" y="26" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="21" fontWeight="900" fontStyle="italic" fill="#1434CB">VISA</text>
+            </svg>
+            <svg role="img" aria-label="Mastercard" viewBox="0 0 64 40" className="h-8 w-[51px] rounded border border-slate-200 bg-white">
+              <circle cx="24" cy="20" r="12" fill="#EB001B" />
+              <circle cx="40" cy="20" r="12" fill="#F79E1B" />
+              <path d="M32 11.056a12 12 0 0 1 0 17.888 12 12 0 0 1 0-17.888Z" fill="#FF5F00" />
+            </svg>
+          </div>
           <p>Legal pages are drafts pending legal review. <Link href="/legal/cookies" className="underline underline-offset-2">Cookie settings</Link></p>
         </div>
       </Container>

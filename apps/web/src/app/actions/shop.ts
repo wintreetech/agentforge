@@ -60,7 +60,6 @@ export async function toggleWishlistAction(formData: FormData) {
 
 const checkoutSchema = z.object({
   country: z.string().regex(/^[A-Z]{2}$/, "Choose your country."),
-  vatId: z.string().trim().max(20).optional(),
   coupon: z.string().trim().max(40).optional(),
   consent: z.literal("on", { message: "Please confirm the digital-content consent to continue." }),
   terms: z.literal("on", { message: "Please accept the Terms and Licence Agreement." }),
@@ -79,7 +78,7 @@ export async function checkoutAction(_prev: { error?: string } | undefined, form
       email: u.email,
       couponCode: parsed.data.coupon || null,
       country: parsed.data.country,
-      vatId: parsed.data.vatId || null,
+      vatId: null,
       digitalConsent: true,
     });
     if (!r.ok) return { error: r.error };

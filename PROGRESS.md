@@ -81,7 +81,7 @@ Removed from the website at the client's request:
 
 - [ ] Set every secret in `.env.example` (unique, ≥ 32 random bytes); `PAYMENT_PROVIDER=stripe`; leave `ALLOW_SANDBOX_PAYMENTS` unset
 - [ ] Apply `supabase/migrations` and `supabase/seed.sql`; implement and enable the Supabase repository and Auth; migrate off the JSON store
-- [ ] Stripe: enable Stripe Tax and VAT ID collection; register the webhook for `checkout.session.completed`, `checkout.session.expired` and `charge.refunded`; complete an end-to-end test-mode purchase and refund
+- [ ] Stripe: enable Stripe Tax (VAT ID collection is disabled by request); register the webhook for `checkout.session.completed`, `checkout.session.expired` and `charge.refunded`; complete an end-to-end test-mode purchase and refund
 - [ ] Verify model IDs and price table; set provider keys; run each functional product live and review outputs
 - [ ] Legal review of all `/legal/*` pages, company details on invoices and contact pages, DPA and sub-processor list
 - [ ] Email provider for verification, reset and receipts; turn off `/dev/outbox` (it's already disabled in production)
@@ -90,3 +90,9 @@ Removed from the website at the client's request:
 - [ ] Nonce-based CSP; HSTS preload decision; error monitoring and log retention
 - [ ] Run Lighthouse and axe on key pages; fix findings; record actual scores
 - [ ] Load test the hosted execution path and set per-plan concurrency limits
+
+## Navigation and checkout update (2026-11-26)
+
+- Removed desktop marketplace mega-menu trigger and panel; mobile marketplace link and category navigation remain.
+- Removed checkout VAT ID input and explanatory text, and disabled tax ID collection in Stripe checkout. Country-based tax calculation and required purchase consent remain.
+- Source syntax and archive checked; dependency installation unavailable from the offline cache, so full build and browser tests were not run.

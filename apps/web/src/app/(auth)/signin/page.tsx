@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
-import { env } from "@/lib/env";
 import { AuthShell } from "../auth-shell";
 import { SignInForm } from "../auth-forms";
 
@@ -13,7 +12,7 @@ export default async function SignIn({ searchParams }: { searchParams: Promise<{
   if (await getUser()) redirect(safe);
   return (
     <AuthShell title="Welcome back" intro="Sign in to your AgentForge workspace.">
-      <SignInForm next={safe} googleEnabled={!!env.googleClientId} />
+      <SignInForm next={safe} />
     </AuthShell>
   );
 }

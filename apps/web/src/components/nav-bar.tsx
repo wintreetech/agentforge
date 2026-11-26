@@ -1,18 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Heart, LayoutDashboard, LogOut, Menu, Search, Shield, ShoppingBag, X, ArrowRight } from "lucide-react";
+import { ChevronDown, Heart, LayoutDashboard, LogOut, Menu, Search, Shield, ShoppingBag, X } from "lucide-react";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 import { buttonClass } from "./ui";
-import { cn, eur } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { signOutAction } from "@/app/actions/auth";
 
-interface Cat { slug: string; name: string; navLabel: string; tagline: string; accent: string; count: number; available: number }
-interface Feat { slug: string; title: string; priceCents: number; thumbnail: string; short: string }
+interface Cat { slug: string; name: string; navLabel: string; accent: string }
 
 const RESOURCES = [
   { href: "/how-it-works", label: "How it works", desc: "The full workflow and a guided tour" },
@@ -25,8 +23,8 @@ const RESOURCES = [
   { href: "/enterprise", label: "Enterprise", desc: "Security, SSO and custom work" },
 ];
 
-export function NavBar({ user, cartCount, wishCount, categories, featured }: { user: { name: string; email: string; role: string } | null; cartCount: number; wishCount: number; categories: Cat[]; featured: Feat[] }) {
-  const [open, setOpen] = useState<null | "market" | "resources" | "user">(null);
+export function NavBar({ user, cartCount, wishCount, categories }: { user: { name: string; email: string; role: string } | null; cartCount: number; wishCount: number; categories: Cat[] }) {
+  const [open, setOpen] = useState<null | "resources" | "user">(null);
   const [mobile, setMobile] = useState(false);
   const [search, setSearch] = useState(false);
   const pathname = usePathname();
@@ -75,16 +73,6 @@ export function NavBar({ user, cartCount, wishCount, categories, featured }: { u
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Logo />
         <nav aria-label="Main" className="ml-2 hidden items-center xl:flex">
-          <button
-            type="button"
-            aria-expanded={open === "market"}
-            aria-controls="mega-market"
-            onClick={() => setOpen(open === "market" ? null : "market")}
-            onMouseEnter={() => setOpen("market")}
-            className="flex items-center gap-1 whitespace-nowrap rounded-lg px-2 py-1.5 text-[13.5px] text-muted transition hover:text-fg"
-          >
-            Marketplace <ChevronDown className={cn("size-3.5 transition", open === "market" && "rotate-180")} />
-          </button>
           {categories.filter((c) => c.slug !== "multi-agent-systems").map((c) => (
             <span key={c.slug}>{navLink(`/category/${c.slug}`, c.navLabel)}</span>
           ))}
@@ -145,41 +133,6 @@ export function NavBar({ user, cartCount, wishCount, categories, featured }: { u
           </button>
         </div>
       </div>
-
-      {open === "market" && (
-        <div id="mega-market" onMouseLeave={() => setOpen(null)} className="absolute inset-x-0 top-16 hidden border-b border-border bg-bg/95 backdrop-blur-xl xl:block">
-          <div className="mx-auto grid max-w-7xl grid-cols-12 gap-8 px-8 py-8">
-            <div className="col-span-7 grid grid-cols-2 gap-2">
-              {categories.map((c) => (
-                <Link key={c.slug} href={`/category/${c.slug}`} className="group flex gap-3 rounded-xl p-3 transition hover:bg-surface-2">
-                  <span className="mt-1 size-2.5 shrink-0 rounded-full" style={{ background: c.accent, boxShadow: `0 0 12px ${c.accent}` }} />
-                  <span>
-                    <span className="flex items-center gap-2 text-[14px] font-medium">{c.name}<span className="text-[11.5px] font-normal text-subtle">{c.count} listings</span></span>
-                    <span className="mt-0.5 block text-[13px] text-muted">{c.tagline}</span>
-                  </span>
-                </Link>
-              ))}
-              <Link href="/marketplace" className="col-span-2 mt-2 flex items-center gap-1.5 px-3 text-[13px] font-medium text-accent-2">Browse all products <ArrowRight className="size-3.5" /></Link>
-            </div>
-            <div className="col-span-5">
-              <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-subtle">Available now</p>
-              <div className="space-y-2">
-                {featured.map((f) => (
-                  <Link key={f.slug} href={`/products/${f.slug}`} className="flex items-center gap-3 rounded-xl border border-border bg-surface p-2.5 transition hover:border-border-strong">
-                    <Image src={f.thumbnail} alt="" width={96} height={64} className="h-14 w-20 rounded-lg object-cover" />
-                    <span className="min-w-0">
-                      <span className="block truncate text-[13.5px] font-medium">{f.title}</span>
-                      <span className="block truncate text-[12.5px] text-muted">{f.short}</span>
-                    </span>
-                    <span className="ml-auto text-[13px] font-semibold tabular-nums">{eur(f.priceCents)}</span>
-                  </Link>
-                ))}
-              </div>
-              <Link href="/marketplace?availability=available" className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-accent-2">All available products <ArrowRight className="size-3.5" /></Link>
-            </div>
-          </div>
-        </div>
-      )}
 
       {open === "resources" && (
         <div className="absolute right-[max(1rem,calc(50%-36rem))] top-16 hidden w-[520px] rounded-b-2xl border border-t-0 border-border bg-bg/95 p-3 backdrop-blur-xl xl:grid xl:grid-cols-2 xl:gap-1">

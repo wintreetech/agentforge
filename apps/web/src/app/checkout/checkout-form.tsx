@@ -7,7 +7,7 @@ import type { Totals } from "@agentforge/commerce";
 import { checkoutAction } from "@/app/actions/shop";
 import { SubmitButton } from "@/components/forms";
 import { Card, Input, Label, Notice, Select, buttonClass } from "@/components/ui";
-import { eur2, licenseLabel } from "@/lib/utils";
+import { eur2 } from "@/lib/utils";
 
 export function CheckoutForm({ countries, country, coupon, couponError, lines, totals, email }: { countries: [string, string][]; country: string; coupon: string; couponError: string | null; lines: { slug: string; title: string; license: string; quantity: number; unitCents: number }[]; totals: Totals; email: string }) {
   const [state, action] = useActionState(checkoutAction, undefined);
@@ -20,19 +20,14 @@ export function CheckoutForm({ countries, country, coupon, couponError, lines, t
         <Card className="p-5">
           <p className="font-semibold">Billing</p>
           <p className="mt-1 text-[13px] text-muted">Your receipt goes to {email}.</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4">
             <div>
               <Label htmlFor="country">Country</Label>
               <Select id="country" name="country" defaultValue={country} onChange={(e) => refresh(e.target.value, coupon)}>
                 {countries.map(([c, n]) => <option key={c} value={c}>{n}</option>)}
               </Select>
             </div>
-            <div>
-              <Label htmlFor="vatId">EU VAT ID (businesses, optional)</Label>
-              <Input id="vatId" name="vatId" maxLength={20} placeholder="e.g. DE123456789" />
-            </div>
           </div>
-          <p className="mt-2 text-[12px] text-subtle">VAT IDs are validated by the payment provider before reverse charge is applied. The sandbox does not validate them and always charges VAT.</p>
         </Card>
         <Card className="p-5">
           <Label htmlFor="coupon">Discount code</Label>

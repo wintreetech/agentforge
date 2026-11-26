@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
-import { env } from "@/lib/env";
 import { AuthShell } from "../auth-shell";
 import { SignUpForm } from "../auth-forms";
 
@@ -11,7 +10,7 @@ export default async function SignUp() {
   if (await getUser()) redirect("/dashboard");
   return (
     <AuthShell title="Create your workspace" intro="Free to create. Pay only for what you buy.">
-      <SignUpForm googleEnabled={!!env.googleClientId} />
+      <SignUpForm />
     </AuthShell>
   );
 }

@@ -130,7 +130,7 @@ export class StripePaymentProvider implements PaymentProvider {
     f.set("client_reference_id", req.orderId);
     f.set("metadata[order_id]", req.orderId);
     f.set("automatic_tax[enabled]", "true");
-    f.set("tax_id_collection[enabled]", "true");
+    f.set("tax_id_collection[enabled]", "false");
     req.lines.forEach((l, i) => {
       f.set(`line_items[${i}][quantity]`, String(l.quantity));
       f.set(`line_items[${i}][price_data][currency]`, "eur");
