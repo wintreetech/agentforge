@@ -44,21 +44,6 @@ export const RUN_LIMITS = { maxSteps: 40, maxTokens: 120_000, maxCostEur: 2, nod
 
 export function defaultGraph(slug: string): { nodes: GraphNode[]; edges: GraphEdge[] } {
   const n = (idv: string, type: NodeType, x: number, y: number, data: Record<string, unknown>): GraphNode => ({ id: idv, type, position: { x, y }, data: { label: NODE_TYPES[type].label, ...data } });
-  if (slug === "multi-agent-research-team") {
-    return {
-      nodes: [
-        n("trigger", "trigger", 0, 120, {}),
-        n("research", "handoff", 260, 120, { label: "Research team", product: "multi-agent-research-team", inputTemplate: "{{input}}" }),
-        n("review", "human_approval", 520, 120, { message: "Review the report before it is finalised." }),
-        n("out", "format", 780, 120, { label: "Final report", template: "{{research}}" }),
-      ],
-      edges: [
-        { id: "e1", source: "trigger", target: "research" },
-        { id: "e2", source: "research", target: "review" },
-        { id: "e3", source: "review", target: "out" },
-      ],
-    };
-  }
   return {
     nodes: [
       n("trigger", "trigger", 0, 140, {}),
@@ -294,7 +279,6 @@ export async function advance(runId: string, userId: string): Promise<StudioRun 
         const kbDocs = cfg.kbId ? await read((db) => db.kbDocuments.filter((x) => x.kbId === cfg.kbId && x.userId === userId).map((x) => ({ id: x.id, name: x.name, pages: x.pages }))) : [];
         const inputFor: Record<string, unknown> =
           slug === "ai-knowledge-base-agent" ? { question: text.slice(0, 500), docs: kbDocs }
-          : slug === "multi-agent-research-team" ? { question: text.slice(0, 400), docs: kbDocs, urls: [], approveFetch: false, depth: "standard" }
           : { draft: text, goal: "Improve clarity", points: text, text, keyword: text.slice(0, 120), audience: "General", name: text.slice(0, 160), attributes: text, fullName: "Candidate", targetRole: "Role", history: text, jobDescription: text };
         const keys = await providerKeysFor(userId);
         const model = getModel(cfg.model) ?? getModel("sandbox-deterministic")!;

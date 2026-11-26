@@ -17,7 +17,7 @@ export default async function RunTool({ params }: { params: Promise<{ slug: stri
   if (!p || !meta) notFound();
   if (meta.policy.kind === "download") redirect("/dashboard/downloads");
   // Server-side entitlement check: owning the product is required here.
-  if (!(await ownsProduct(user.id, slug))) redirect(`/products/${slug}?error=${encodeURIComponent("Purchase this product to use it in your dashboard. You can try it in the Playground.")}`);
+  if (!(await ownsProduct(user.id, slug))) redirect(`/products/${slug}?error=${encodeURIComponent("Purchase this product to use it in your dashboard.")}`);
   const [models, credits, kbs] = await Promise.all([availableModels(user.id, false), creditBalance(user.id), read((db) => db.knowledgeBases.filter((k) => k.userId === user.id).map((k) => ({ id: k.id, name: k.name })))]);
   return (
     <>

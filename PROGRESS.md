@@ -48,6 +48,21 @@ Screenshots: `docs/screenshots/*-desktop.png` and `*-mobile.png` (8 pages); real
 - The `DEVTEST10` seed coupon is now inactive in production.
 - Verified with a production build on port 10000: public pages, sign-up → dashboard, sandbox purchase → fulfilment, owned tool run, admin panel. No page errors.
 
+## Images + workflow tour (added 2026-11-25)
+
+- **Fixed blank images:** 24 of 195 generated SVGs (all micro-tool and developer-kit covers, 2 category images, the developers page image and one blog image) had a duplicated `stroke` attribute, so browsers refused to render them. Fixed in `scripts/generate-assets.mjs` (`panel()` helper) and in the files; `tests/unit/assets.test.ts` now fails on any duplicated SVG attribute. A browser crawl of 118 pages finds 0 broken images.
+- **New `/how-it-works` page:** 6-step customer journey with real screenshots (`public/screenshots/tour/`), the purchase-fulfilment flow, the run pipeline, Agent Studio and roles. Linked from Resources, the footer, the homepage and the sitemap.
+- **Guided tour** (`components/guided-tour.tsx`): 11 steps across home, marketplace, product, Playground, dashboard, Agent Studio and admin, highlighting real elements (`data-tour` attributes). Started from "Take the tour" or any URL with `?tour=1`; visitors get a sign-in prompt for dashboard/admin steps. Tested as visitor, admin and on a Pixel 7.
+
+## Scope reduction (added 2026-11-25)
+
+Removed from the website at the client's request:
+- **Playground** (free demo runs): page, links, homepage demo section and tour step. `/api/execute` now requires sign-in and ownership.
+- **Customer dashboard:** licence keys, execution history, API keys and support tickets pages. Admin "Licences" removed; admin "Support tickets" became "Contact messages" (contact-form inbox).
+- **Licence options:** products have one one-time price; no licence picker, labels, compare row, filter or upgrade tiers. Downloads include `PURCHASE.txt` instead of `LICENSE-KEY.txt`. (Licence records are still created internally to gate downloads.)
+- **Developer API & portal:** `/developers/*`, `/api/v1/*`, related nav/footer/homepage content.
+- **Multi-Agent Systems category:** all 10 products (incl. the Multi-Agent Research Team) and the Python LangGraph service (`apps/api`). Catalogue is now **50 products, 5 categories, 9 purchasable**.
+
 ## Not done / blockers (honest list)
 
 1. **Supabase isn't wired at runtime.** The app uses the development JSON store and development auth. The SQL schema and RLS are ready and tested; a Supabase repository plus Supabase Auth (Google sign-in, MFA) needs credentials. The JSON store is single-instance only.

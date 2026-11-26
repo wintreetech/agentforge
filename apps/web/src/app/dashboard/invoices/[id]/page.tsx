@@ -33,7 +33,7 @@ export default async function Invoice({ params }: { params: Promise<{ id: string
         </div>
         <table className="mt-8 w-full text-[13.5px]">
           <thead><tr className="border-b border-border text-left text-subtle"><th className="py-2 font-medium">Item</th><th className="py-2 text-right font-medium">Qty</th><th className="py-2 text-right font-medium">Unit</th><th className="py-2 text-right font-medium">Amount</th></tr></thead>
-          <tbody>{o.items.map((i) => <tr key={i.slug} className="border-b border-border"><td className="py-2.5">{i.title}<span className="block text-[12px] text-subtle">{licenseLabel[i.license]} licence</span></td><td className="py-2.5 text-right">{i.quantity}</td><td className="py-2.5 text-right tabular-nums">{eur2(i.unitCents)}</td><td className="py-2.5 text-right tabular-nums">{eur2(i.unitCents * i.quantity)}</td></tr>)}</tbody>
+          <tbody>{o.items.map((i) => <tr key={i.slug} className="border-b border-border"><td className="py-2.5">{i.title}</td><td className="py-2.5 text-right">{i.quantity}</td><td className="py-2.5 text-right tabular-nums">{eur2(i.unitCents)}</td><td className="py-2.5 text-right tabular-nums">{eur2(i.unitCents * i.quantity)}</td></tr>)}</tbody>
         </table>
         <dl className="ml-auto mt-4 max-w-xs space-y-1.5 text-[13.5px]">
           <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd className="tabular-nums">{eur2(o.subtotalCents)}</dd></div>

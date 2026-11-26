@@ -30,7 +30,7 @@ export default async function Purchases() {
                   <span className="ml-auto font-semibold tabular-nums">{eur2(o.totalCents)}</span>
                 </div>
                 <ul className="mt-3 space-y-1 text-[13.5px]">
-                  {o.items.map((i) => <li key={i.slug}><Link href={`/products/${i.slug}`} className="hover:underline">{i.title}</Link> <span className="text-subtle">· {licenseLabel[i.license]} licence{i.quantity > 1 ? ` × ${i.quantity}` : ""}</span></li>)}
+                  {o.items.map((i) => <li key={i.slug}><Link href={`/products/${i.slug}`} className="hover:underline">{i.title}</Link> <span className="text-subtle">{i.quantity > 1 ? ` × ${i.quantity}` : ""}</span></li>)}
                 </ul>
                 <div className="mt-4 flex flex-wrap items-center gap-3 text-[13px]">
                   {o.number && <Link href={`/dashboard/invoices/${o.id}`} className="text-accent-2">Invoice</Link>}

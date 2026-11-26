@@ -79,30 +79,6 @@ export async function deleteAccountAction(_: S, fd: FormData): Promise<S> {
 }
 
 // ───────────── API keys ─────────────
-export async function createApiKeyAction(_: S, fd: FormData): Promise<S> {
-  const u = await requireUser();
-  const name = z.string().trim().min(2).max(60).safeParse(fd.get("name"));
-  if (!name.success) return { error: "Give the key a name (2–60 characters)." };
-  const count = await read((db) => db.apiKeys.filter((k) => k.userId === u.id && !k.revokedAt).length);
-  if (count >= 10) return { error: "You can have at most 10 active keys." };
-  const secret = `afk_live_${randomBytes(24).toString("base64url")}`;
-  await mutate((db) => void db.apiKeys.push({ id: id("key"), userId: u.id, name: name.data, prefix: secret.slice(0, 14), hash: sha256(secret), createdAt: now(), lastUsedAt: null, revokedAt: null }));
-  await audit(u.id, "apikey.created", name.data);
-  revalidatePath("/dashboard/api-keys");
-  return { ok: "Key created. Copy it now — it won't be shown again.", secret };
-}
-
-export async function revokeApiKeyAction(fd: FormData) {
-  const u = await requireUser();
-  const kid = String(fd.get("id"));
-  await mutate((db) => {
-    const k = db.apiKeys.find((x) => x.id === kid && x.userId === u.id);
-    if (k && !k.revokedAt) k.revokedAt = now();
-  });
-  await audit(u.id, "apikey.revoked", kid);
-  revalidatePath("/dashboard/api-keys");
-}
-
 // ───────────── Provider keys (BYO) ─────────────
 export async function saveProviderKeyAction(_: S, fd: FormData): Promise<S> {
   const u = await requireUser();
@@ -177,30 +153,6 @@ export async function deleteKbAction(fd: FormData) {
 }
 
 // ───────────── Support & refunds ─────────────
-export async function createTicketAction(_: S, fd: FormData): Promise<S> {
-  const u = await requireUser();
-  const s = z.object({ subject: z.string().trim().min(4).max(140), body: z.string().trim().min(10).max(5000) }).safeParse(Object.fromEntries(fd));
-  if (!s.success) return { error: s.error.issues[0].message };
-  await mutate((db) => void db.tickets.push({ id: id("tkt"), userId: u.id, subject: s.data.subject, status: "open", messages: [{ from: "customer", authorId: u.id, body: s.data.body, at: now() }], createdAt: now() }));
-  revalidatePath("/dashboard/support");
-  return { ok: "Ticket created. We'll reply here and by email." };
-}
-
-export async function replyTicketAction(fd: FormData) {
-  const u = await requireUser();
-  const tid = String(fd.get("id"));
-  const body = String(fd.get("body") ?? "").trim().slice(0, 5000);
-  if (body.length < 2) return;
-  await mutate((db) => {
-    const t = db.tickets.find((x) => x.id === tid && x.userId === u.id);
-    if (t && t.status !== "closed") {
-      t.messages.push({ from: "customer", authorId: u.id, body, at: now() });
-      t.status = "open";
-    }
-  });
-  revalidatePath("/dashboard/support");
-}
-
 export async function requestRefundAction(_: S, fd: FormData): Promise<S> {
   const u = await requireUser();
   const orderId = String(fd.get("orderId"));

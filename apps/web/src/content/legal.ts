@@ -95,7 +95,7 @@ Open **Dashboard → My purchases** and choose **Request a refund** on the order
 - EU/EEA consumers who did not consent to immediate delivery may withdraw within 14 days.
 
 ## How refunds work
-Approved refunds are paid back to the original payment method through our payment provider. When a full refund completes, access to the product and its licence key is revoked.
+Approved refunds are paid back to the original payment method through our payment provider. When a full refund completes, access to the product is revoked.
 
 ## Hosted credits
 Credits consumed by completed runs are not refundable, except where a run failed due to our error.`,
@@ -113,7 +113,7 @@ Credits consumed by completed runs are not refundable, except where a run failed
 | White-label | Rebrand and offer it to your customers | Resell the source code itself |
 
 ## Seats
-Each licence covers one person unless the product is sold per seat. Licence keys are tied to the purchasing account.
+Each licence covers one person unless the product is sold per seat. Access is tied to the purchasing account.
 
 ## Updates
 You receive updates for the major version you bought.

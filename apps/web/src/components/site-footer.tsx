@@ -6,9 +6,8 @@ import { NewsletterForm } from "./forms";
 
 const cols: { title: string; links: [string, string][] }[] = [
   { title: "Marketplace", links: [["/marketplace", "All products"], ...categories.map((c) => [`/category/${c.slug}`, c.name] as [string, string]), ["/compare", "Compare products"]] },
-  { title: "Platform", links: [["/playground", "AI Playground"], ["/dashboard/studio", "Agent Studio"], ["/assistant", "Product assistant"], ["/pricing", "Pricing"], ["/enterprise", "Enterprise"], ["/integrations", "Integrations"]] },
-  { title: "Developers", links: [["/developers", "Developer portal"], ["/developers/api", "REST API reference"], ["/developers/webhooks", "Webhooks"], ["/developers/mcp", "MCP integration"], ["/docs", "Documentation"], ["/status", "System status"]] },
-  { title: "Company", links: [["/about", "About"], ["/blog", "Blog"], ["/careers", "Careers"], ["/contact", "Contact"], ["/affiliates", "Affiliate program"], ["/sellers", "Sell on AgentForge"], ["/changelog", "Changelog"]] },
+  { title: "Platform", links: [["/dashboard/studio", "Agent Studio"], ["/assistant", "Product assistant"], ["/pricing", "Pricing"], ["/enterprise", "Enterprise"], ["/integrations", "Integrations"], ["/docs", "Documentation"], ["/status", "System status"]] },
+  { title: "Company", links: [["/how-it-works", "How it works"], ["/about", "About"], ["/blog", "Blog"], ["/careers", "Careers"], ["/contact", "Contact"], ["/affiliates", "Affiliate program"], ["/sellers", "Sell on AgentForge"], ["/changelog", "Changelog"]] },
   { title: "Legal", links: [["/legal/terms", "Terms of Service"], ["/legal/privacy", "Privacy Policy"], ["/legal/cookies", "Cookie Policy"], ["/legal/refunds", "Refund Policy"], ["/legal/license", "Licence Agreement"], ["/security", "Security"], ["/help", "Help center"], ["/faq", "FAQ"]] },
 ];
 

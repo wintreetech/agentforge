@@ -47,7 +47,7 @@ export async function CatalogBrowser({ searchParams, fixed, basePath }: { search
             </EmptyState>
           </div>
         ) : (
-          <div className={cn("mt-5 grid gap-5", view === "grid" ? "sm:grid-cols-2 xl:grid-cols-3" : "grid-cols-1")}>
+          <div data-tour="grid" className={cn("mt-5 grid gap-5", view === "grid" ? "sm:grid-cols-2 xl:grid-cols-3" : "grid-cols-1")}>
             {result.items.map((p, i) => <ProductCard key={p.slug} p={p} view={view} priority={i < 3} />)}
           </div>
         )}

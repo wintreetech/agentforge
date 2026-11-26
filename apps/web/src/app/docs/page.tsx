@@ -21,7 +21,7 @@ export default async function Docs() {
           ))}
         </div>
         <div className="mt-12 grid gap-4 md:grid-cols-3">
-          {[["/developers", "Developer portal", "REST API, authentication, rate limits"], ["/dashboard/studio", "Agent Studio", "Visual workflows, approvals, schedules"], ["/help", "Help center", "Buying, credits, accounts"]].map(([h, t, d]) => (
+          {[["/dashboard/studio", "Agent Studio", "Visual workflows, approvals, schedules"], ["/help", "Help center", "Buying, credits, accounts"]].map(([h, t, d]) => (
             <Link key={h} href={h} className="rounded-2xl border border-border p-5 hover:border-border-strong"><p className="font-semibold">{t}</p><p className="mt-1 text-[13.5px] text-muted">{d}</p></Link>
           ))}
         </div>

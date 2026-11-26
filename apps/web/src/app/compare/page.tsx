@@ -18,7 +18,6 @@ export default async function Compare({ searchParams }: { searchParams: Promise<
     ["Status", (p) => <StatusBadge status={p.status} />],
     ["Delivery", (p) => deliveryShort[p.delivery]],
     ["Hosting", (p) => (p.hosting === "both" ? "Hosted or self-hosted" : p.hosting)],
-    ["Licence", (p) => licenseLabel[p.license]],
     ["Difficulty", (p) => p.difficulty],
     ["Cost per run", (p) => (p.costPerRunEur ? `€${p.costPerRunEur[0].toFixed(3)}–€${p.costPerRunEur[1].toFixed(2)}` : "—")],
     ["Capabilities", (p) => <ul className="list-disc space-y-1 pl-4">{p.capabilities.map((c) => <li key={c}>{c}</li>)}</ul>],

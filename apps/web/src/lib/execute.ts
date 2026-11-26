@@ -91,21 +91,6 @@ export async function normaliseInput(slug: string, fd: FormData, userId: string 
       if (plain.text?.trim()) docs.push({ id: "pasted", name: "Pasted text", pages: [plain.text] });
       return { question: plain.question ?? "", docs };
     }
-    case "multi-agent-research-team": {
-      const docs: SourceDoc[] = (plain.sources ?? "")
-        .split(/\n\s*---\s*\n/)
-        .map((s) => s.trim())
-        .filter((s) => s.length > 20)
-        .map((s, i) => {
-          const [first, ...rest] = s.split("\n");
-          const titled = /^source:\s*/i.test(first) && rest.join("").trim().length > 20;
-          return { id: `pasted${i}`, name: (titled ? first.replace(/^source:\s*/i, "") : first).slice(0, 80) || `Pasted source ${i + 1}`, pages: [titled ? rest.join("\n") : s] };
-        });
-      const up = await uploadedDoc(fd);
-      if (up) docs.push(up);
-      const urls = (plain.urls ?? "").split(/\s+/).map((u) => u.trim()).filter(Boolean);
-      return { question: plain.question ?? "", docs, urls, approveFetch: plain.approveFetch === "on" || plain.approveFetch === "true", depth: plain.depth || "standard" };
-    }
     default:
       return plain;
   }

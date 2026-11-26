@@ -34,7 +34,6 @@ export default async function Downloads() {
                 <summary className="cursor-pointer text-[13px] text-muted">Package contents</summary>
                 <ul className="mt-2 grid gap-1 font-mono text-[12px] text-muted sm:grid-cols-2">
                   {files[i].map((f) => <li key={f.path} className="flex items-center gap-1.5"><FileCode className="size-3.5 shrink-0" />{f.path}</li>)}
-                  <li className="flex items-center gap-1.5"><FileCode className="size-3.5 shrink-0" />LICENSE-KEY.txt (your licence)</li>
                 </ul>
               </details>
             </Card>

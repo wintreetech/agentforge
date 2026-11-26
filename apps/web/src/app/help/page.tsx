@@ -14,9 +14,9 @@ export default function Help() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { href: "/docs", icon: BookOpen, t: "Product documentation" },
-            { href: "/developers", icon: Code2, t: "Developer portal" },
+            { href: "/how-it-works", icon: Code2, t: "How it works" },
             { href: "/legal/refunds", icon: Receipt, t: "Refunds" },
-            { href: "/dashboard/support", icon: LifeBuoy, t: "Contact support" },
+            { href: "/contact", icon: LifeBuoy, t: "Contact us" },
           ].map((c) => <Link key={c.href} href={c.href} className="rounded-2xl border border-border bg-surface p-5 transition hover:border-border-strong"><c.icon className="size-5 text-accent-2" /><p className="mt-3 font-medium">{c.t}</p></Link>)}
         </div>
         {HELP.map((s) => (

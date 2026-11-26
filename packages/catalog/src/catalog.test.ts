@@ -2,8 +2,9 @@ import { describe, expect, it } from "vitest";
 import { seedProducts, categories, filterProducts, parseQuery, recommend, parseBudget, suggest, FUNCTIONAL_SLUGS } from "./index.ts";
 
 describe("catalog", () => {
-  it("has 60 products across 6 categories with at least 10 each", () => {
-    expect(seedProducts).toHaveLength(60);
+  it("has 50 products across 5 categories with at least 10 each", () => {
+    expect(seedProducts).toHaveLength(50);
+    expect(seedProducts.some((p) => p.category === "multi-agent-systems")).toBe(false);
     for (const c of categories) {
       expect(seedProducts.filter((p) => p.category === c.slug).length).toBeGreaterThanOrEqual(10);
     }
@@ -29,7 +30,6 @@ describe("catalog", () => {
     expect(price("ai-resume-cover-letter-builder")).toBe(10);
     expect(price("complete-ai-business-automation-suite")).toBe(799);
     expect(price("mcp-server-developer-kit")).toBe(99);
-    expect(price("multi-agent-research-team")).toBe(249);
   });
 
   it("only the 10 functional products are published", () => {
@@ -64,7 +64,7 @@ describe("filters and search", () => {
 
   it("availability filter returns only purchasable products", () => {
     const r = filterProducts(seedProducts, { availability: ["available"], perPage: 60 });
-    expect(r.total).toBe(10);
+    expect(r.total).toBe(9);
   });
 
   it("paginates", () => {

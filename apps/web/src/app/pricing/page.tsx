@@ -7,7 +7,7 @@ import { env } from "@/lib/env";
 import { Card, Container, LinkButton, PageHeader, SectionHeading, Table } from "@/components/ui";
 import { eur } from "@/lib/utils";
 
-export const metadata: Metadata = { title: "Pricing", description: "One-time product prices from €10 to €800, transparent running costs, credits and licences.", alternates: { canonical: "/pricing" } };
+export const metadata: Metadata = { title: "Pricing", description: "One-time product prices from €10 to €800, transparent running costs and credits.", alternates: { canonical: "/pricing" } };
 
 export default async function Pricing() {
   const products = await getProducts();
@@ -15,11 +15,10 @@ export default async function Pricing() {
     <>
       <PageHeader eyebrow="Pricing" title="Pay once for the product. See the running cost upfront." intro="Products are one-time purchases from €10 to €800, excluding VAT. Hosted products include credits for live-model runs; you can also bring your own API key." />
       <Container className="py-14">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2">
           {[
-            { t: "One-time products", p: "€10–€800", d: "Tools, agents, kits and suites. Licence included.", items: ["Personal, commercial, developer, agency or white-label licence", "Versioned downloads and updates for the major version", "Licence key and verification API"] },
+            { t: "One-time products", p: "€10–€800", d: "Tools, agents, kits and suites.", items: ["Instant access after payment", "Versioned downloads and updates for the major version", "Invoice for every order"] },
             { t: "Hosted credits", p: `${env.creditsPerHostedPurchase} included`, d: "With each hosted tool or agent purchase.", items: ["1 credit ≈ €0.01 of estimated provider cost", "Sandbox runs are free", "Bring your own key: no credits used"] },
-            { t: "Licence upgrades", p: "×2 – ×3", d: "Upgrade one tier at checkout.", items: ["Personal → Commercial: 2× price", "Commercial or Developer → Agency: 2–3× price", "White-label on selected products"] },
           ].map((c) => (
             <Card key={c.t} className="flex flex-col p-6">
               <p className="font-semibold">{c.t}</p>

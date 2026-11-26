@@ -91,25 +91,12 @@ export default async function ProductPage({ params, searchParams }: { params: Pr
 
             {error && <Notice tone="danger" className="mt-4">{error}</Notice>}
 
-            <Card className="mt-6 p-5">
+            <Card data-tour="buy" className="mt-6 p-5">
               {buyable ? (
                 <form action={addToCartAction} className="space-y-4">
                   <input type="hidden" name="slug" value={p.slug} />
-                  <fieldset>
-                    <legend className="mb-2 text-[13px] font-medium">Licence</legend>
-                    <div className="space-y-2">
-                      {opts.map((o, i) => (
-                        <label key={o.license} className="flex cursor-pointer items-center gap-3 rounded-xl border border-border p-3 has-[:checked]:border-accent has-[:checked]:bg-accent/5">
-                          <input type="radio" name="license" value={o.license} defaultChecked={i === 0} className="accent-[var(--accent)]" />
-                          <span className="flex-1">
-                            <span className="block text-[14px] font-medium">{licenseLabel[o.license]} licence</span>
-                            <span className="block text-[12.5px] text-muted">{o.note}</span>
-                          </span>
-                          <span className="text-lg font-semibold tabular-nums">{eur(o.priceCents)}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </fieldset>
+                  <input type="hidden" name="license" value={opts[0].license} />
+                  <p className="flex items-baseline gap-2"><span className="text-3xl font-semibold tabular-nums">{eur(opts[0].priceCents)}</span><span className="text-[13px] text-subtle">one-time price</span></p>
                   <p className="text-[12px] text-subtle">Prices exclude VAT, which is calculated at checkout by country.</p>
                   {owned ? (
                     <div className="space-y-2">
@@ -132,7 +119,7 @@ export default async function ProductPage({ params, searchParams }: { params: Pr
                   <button disabled className={buttonClass("outline", "lg", "mt-4 w-full")} title="Disabled: product not yet released"><Clock className="size-4" /> Coming soon</button>
                 </div>
               )}
-              <div className="mt-3 grid grid-cols-2 gap-2">
+              <div className="mt-3">
                 <form action={toggleWishlistAction}>
                   <input type="hidden" name="slug" value={p.slug} />
                   <input type="hidden" name="back" value={`/products/${p.slug}`} />
@@ -140,11 +127,6 @@ export default async function ProductPage({ params, searchParams }: { params: Pr
                     <Heart className={`size-4 ${wished ? "fill-accent text-accent" : ""}`} /> {wished ? "Wishlisted" : "Wishlist"}
                   </button>
                 </form>
-                {p.demoAvailable && runnable ? (
-                  <LinkButton href={`/playground?product=${p.slug}`} variant="outline"><Play className="size-4" /> Try live demo</LinkButton>
-                ) : (
-                  <span className={buttonClass("outline", "md", "cursor-not-allowed opacity-50")} title={p.delivery === "source-code" && p.functional ? "Source-code kits have no live demo; see the documentation and file list." : "No demo available yet"} aria-disabled="true"><Play className="size-4" /> No live demo</span>
-                )}
               </div>
               <Link href={`/compare?ids=${p.slug}`} className="mt-3 flex items-center justify-center gap-1.5 text-[13px] text-muted hover:text-fg"><Scale className="size-3.5" /> Compare with other products</Link>
             </Card>
@@ -153,7 +135,7 @@ export default async function ProductPage({ params, searchParams }: { params: Pr
               <DIcon className="mt-0.5 size-5 shrink-0 text-accent-2" />
               <div className="text-[13.5px]">
                 <p className="font-medium">{deliveryLabel[p.delivery]}</p>
-                <p className="mt-1 text-muted">Version {p.version === "0.0.0" ? "— (unreleased)" : p.version} · {licenseLabel[p.license]} licence · {p.hosting === "both" ? "Hosted or self-hosted" : p.hosting === "hosted" ? "Hosted" : "Self-hosted"} · {p.difficulty[0].toUpperCase() + p.difficulty.slice(1)}</p>
+                <p className="mt-1 text-muted">Version {p.version === "0.0.0" ? "— (unreleased)" : p.version} · {p.hosting === "both" ? "Hosted or self-hosted" : p.hosting === "hosted" ? "Hosted" : "Self-hosted"} · {p.difficulty[0].toUpperCase() + p.difficulty.slice(1)}</p>
                 {p.publishedAt && <p className="mt-1 text-subtle">Published {fmtDate(p.publishedAt)} · Updated {fmtDate(p.updatedAt)}</p>}
               </div>
             </div>
@@ -211,7 +193,6 @@ export default async function ProductPage({ params, searchParams }: { params: Pr
                   ["Estimated operating cost", p.costNote],
                   ["Requirements", p.requirements.join(" · ")],
                   ["Industries", p.industries.join(", ")],
-                  ["Licence", `${licenseLabel[p.license]} — see the Licence Agreement`],
                 ].map(([k, v]) => (
                   <div key={k} className="grid gap-1 p-4 sm:grid-cols-[200px_1fr]"><dt className="text-subtle">{k}</dt><dd>{v}</dd></div>
                 ))}
@@ -286,7 +267,7 @@ export default async function ProductPage({ params, searchParams }: { params: Pr
               <p className="font-semibold">Buying with confidence</p>
               <ul className="mt-3 space-y-2 text-muted">
                 <li className="flex gap-2"><ShieldCheck className="size-4 shrink-0 text-accent-2" />Hosted checkout; access only after confirmed payment</li>
-                <li className="flex gap-2"><Download className="size-4 shrink-0 text-accent-2" />Versioned downloads and licence keys in your dashboard</li>
+                <li className="flex gap-2"><Download className="size-4 shrink-0 text-accent-2" />Versioned downloads in your dashboard</li>
                 <li className="flex gap-2"><FlaskConical className="size-4 shrink-0 text-accent-2" />Sandbox output is always labelled</li>
               </ul>
             </Card>

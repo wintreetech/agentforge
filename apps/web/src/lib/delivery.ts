@@ -43,8 +43,8 @@ export async function buildPackage(slug: string, licence: { key: string; license
   const entries: ZipEntry[] = [];
   for (const f of await walk(root)) entries.push({ path: prefix + f.replace(/\\/g, "/"), data: new Uint8Array(await readFile(path.join(root, f))) });
   entries.push({
-    path: `${prefix}LICENSE-KEY.txt`,
-    data: new TextEncoder().encode(`Product: ${slug}\nVersion: ${d.version}\nLicence: ${licence.license}\nLicensed to: ${licence.email}\nLicence key: ${licence.key}\n\nVerify: POST ${env.appUrl}/api/v1/licenses/verify {"key":"..."}\n`),
+    path: `${prefix}PURCHASE.txt`,
+    data: new TextEncoder().encode(`Product: ${slug}\nVersion: ${d.version}\nPurchased by: ${licence.email}\nReference: ${licence.key}\n`),
   });
   return { bytes: createZip(entries), fileName: `${d.fileName}-${d.version}.zip` };
 }

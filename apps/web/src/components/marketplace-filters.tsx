@@ -95,7 +95,6 @@ export function MarketplaceFilters({ facets, total }: { facets: FacetOptions; to
       {!facets.hideCategory && group("Category", "category", facets.categories)}
       {group("Hosting", "hosting", [{ value: "hosted", label: "Hosted by AgentForge" }, { value: "self-hosted", label: "Self-hosted" }])}
       {group("Difficulty", "difficulty", facets.difficulties.map((d) => ({ value: d, label: d[0].toUpperCase() + d.slice(1) })))}
-      {group("Licence", "license", facets.licenses.map((d) => ({ value: d, label: d[0].toUpperCase() + d.slice(1) })))}
       {group("AI provider", "provider", facets.providers.map((d) => ({ value: d, label: d })))}
       {group("Industry", "industry", facets.industries.map((d) => ({ value: d, label: d })))}
       {group("Integration", "integration", facets.integrations.map((d) => ({ value: d, label: d })))}
@@ -109,7 +108,7 @@ export function MarketplaceFilters({ facets, total }: { facets: FacetOptions; to
 
   return (
     <>
-      <aside className="hidden lg:block" aria-label="Filters">{panel}</aside>
+      <aside data-tour="filters" className="hidden lg:block" aria-label="Filters">{panel}</aside>
       <div className="lg:hidden">
         <button type="button" onClick={() => setOpen(true)} className="inline-flex h-10 items-center gap-2 rounded-xl border border-border px-3.5 text-[13.5px]">
           <SlidersHorizontal className="size-4" /> Filters {active > 0 && <span className="rounded-full bg-accent px-1.5 text-[11px] text-white">{active}</span>}

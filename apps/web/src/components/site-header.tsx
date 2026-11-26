@@ -3,6 +3,7 @@ import { getAnonKey, getUser } from "@/lib/auth";
 import { read } from "@/lib/db";
 import { getProducts } from "@/lib/catalog";
 import { NavBar } from "./nav-bar";
+import { GuidedTour } from "./guided-tour";
 
 export async function SiteHeader() {
   const user = await getUser();
@@ -22,5 +23,10 @@ export async function SiteHeader() {
     count: products.filter((p) => p.category === c.slug).length,
     available: products.filter((p) => p.category === c.slug && p.status === "published").length,
   }));
-  return <NavBar user={user ? { name: user.name, email: user.email, role: user.role } : null} cartCount={cartCount} wishCount={wishCount} categories={cats} featured={featured} />;
+  return (
+    <>
+      <NavBar user={user ? { name: user.name, email: user.email, role: user.role } : null} cartCount={cartCount} wishCount={wishCount} categories={cats} featured={featured} />
+      <GuidedTour signedIn={Boolean(user)} isAdmin={user?.role === "admin"} />
+    </>
+  );
 }

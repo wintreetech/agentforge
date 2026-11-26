@@ -31,7 +31,7 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
       )}
       {!user.emailVerifiedAt && (
         <Notice tone="warning" className="mt-4" title="Verify your email first">
-          We need a verified email to send your receipt and licence keys. <a className="underline" href="/verify">Resend verification</a>.
+          We need a verified email to send your receipt. <a className="underline" href="/verify">Resend verification</a>.
         </Notice>
       )}
       <CheckoutForm

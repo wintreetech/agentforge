@@ -33,14 +33,12 @@ Make yourself an admin: add your email to `ADMIN_EMAILS` before signing up, or r
 | `npm run assets` | Regenerate the 195 SVG illustrations + `public/assets/manifest.json` |
 | `npm run seed:sql` | Regenerate `supabase/seed.sql` from the TypeScript catalogue |
 | `npm run audit:deps` | `npm audit` of production dependencies |
-| `cd apps/api && python -m venv .venv && .venv/Scripts/pip install -r requirements.txt && .venv/Scripts/python -m pytest` | Python LangGraph service tests |
 | `cd products/developer-kits/mcp-server-kit && npm i && npm test` | MCP kit tests (incl. end-to-end MCP stdio session) |
 
 ## Repository layout
 
 ```
 apps/web                 Next.js 16 App Router storefront, dashboards, admin, REST API
-apps/api                 FastAPI + LangGraph execution service (multi-agent research) + pytest
 packages/catalog         60-product catalogue, search/filter, recommendation engine
 packages/commerce        VAT/coupons, payments (sandbox + Stripe), licence keys, signed URLs, ZIP
 packages/ai-engine       Provider abstraction (OpenAI/Anthropic/Gemini/sandbox), runtime, RAG, SSRF guard

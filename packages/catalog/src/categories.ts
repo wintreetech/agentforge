@@ -35,17 +35,6 @@ export const categories: Category[] = [
     motif: "orbit",
   },
   {
-    slug: "multi-agent-systems",
-    name: "Multi-Agent Systems",
-    navLabel: "Multi-Agent",
-    tagline: "Teams of specialised agents that hand work to each other.",
-    description:
-      "Planner, specialist and reviewer agents orchestrated as a graph, with budgets, approvals and a step-by-step audit trail for every run.",
-    accent: "#A855F7",
-    accent2: "#D8B4FE",
-    motif: "constellation",
-  },
-  {
     slug: "business-solutions",
     name: "Complete Business Solutions",
     navLabel: "AI Solutions",

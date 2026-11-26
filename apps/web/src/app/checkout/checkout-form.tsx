@@ -19,7 +19,7 @@ export function CheckoutForm({ countries, country, coupon, couponError, lines, t
       <div className="space-y-6">
         <Card className="p-5">
           <p className="font-semibold">Billing</p>
-          <p className="mt-1 text-[13px] text-muted">Receipt and licence keys go to {email}.</p>
+          <p className="mt-1 text-[13px] text-muted">Your receipt goes to {email}.</p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="country">Country</Label>
@@ -58,7 +58,7 @@ export function CheckoutForm({ countries, country, coupon, couponError, lines, t
         <p className="font-semibold">Order summary</p>
         <ul className="mt-4 space-y-2 text-[13.5px]">
           {lines.map((l) => (
-            <li key={l.slug} className="flex justify-between gap-3"><span>{l.title} <span className="text-subtle">· {licenseLabel[l.license]}{l.quantity > 1 ? ` × ${l.quantity}` : ""}</span></span><span className="tabular-nums">{eur2(l.unitCents * l.quantity)}</span></li>
+            <li key={l.slug} className="flex justify-between gap-3"><span>{l.title} {l.quantity > 1 && <span className="text-subtle"> × {l.quantity}</span>}</span><span className="tabular-nums">{eur2(l.unitCents * l.quantity)}</span></li>
           ))}
         </ul>
         <dl className="mt-4 space-y-2 border-t border-border pt-4 text-[14px]">

@@ -201,41 +201,6 @@ export const RUNNABLE: RunnableMeta[] = [
     agents: ["Retriever", "Answerer"],
   },
   {
-    slug: "multi-agent-research-team",
-    title: "Multi-Agent Research Team",
-    fields: [
-      { name: "question", label: "Research question", type: "text", required: true, maxLength: 400 },
-      { name: "sources", label: "Sources (paste text; separate sources with a line containing ---)", type: "textarea", rows: 10, maxLength: 120000 },
-      { name: "document", label: "Add a source document (PDF, TXT, MD)", type: "file", accept: ".pdf,.txt,.md,application/pdf,text/plain,text/markdown" },
-      { name: "urls", label: "Public URLs to fetch (one per line, max 5)", type: "textarea", rows: 3, maxLength: 2000 },
-      { name: "approveFetch", label: "I approve fetching the URLs above for this run", type: "checkbox", defaultValue: false, help: "URLs are only fetched with your approval, over https, from public addresses." },
-      { name: "depth", label: "Report depth", type: "select", options: toneOpts(["brief", "standard"]), defaultValue: "standard" },
-    ],
-    examples: [
-      {
-        label: "Heat pumps brief",
-        values: {
-          question: "What are the main barriers to heat pump adoption in European homes, and what policies address them?",
-          sources:
-            "Source: Housing energy survey summary\nUpfront cost remains the most cited barrier: installed air-source heat pumps typically cost several times more than a gas boiler replacement. Many homeowners also report uncertainty about running costs, because electricity prices are higher than gas prices per kWh in most member states. Older homes with poor insulation may need radiator upgrades before a heat pump performs well.\n---\nSource: Installer workforce note\nInstallers report waiting lists of several months in some regions. Training programmes for heating engineers have expanded, but certification capacity is still limited. Installers say that clear product standards and longer-term subsidy programmes make it easier to invest in staff.\n---\nSource: Policy overview\nSeveral countries offer grants that cover part of the installation cost, and some have reduced VAT on heat pump installations. Policies that rebalance levies from electricity to gas aim to lower heat pump running costs. Building renovation programmes that combine insulation with heat pump installation are described as most effective for older housing.",
-          depth: "standard",
-          approveFetch: false,
-        },
-      },
-    ],
-    policy: {
-      ...base,
-      kind: "multi-agent",
-      defaultModel: "claude-sonnet-5-5",
-      allowedTools: ["retrieve_documents", "fetch_url (approval required)"],
-      timeoutMs: 180_000,
-      permissions: ["network:fetch-public-https (per-run approval)"],
-      budget: { maxSteps: 10, maxTokens: 80_000, maxCostEur: 0.8 },
-      demo: { enabled: true, creditsPerRun: 3 },
-    },
-    agents: ["Planner", "Researcher", "Critic", "Writer"],
-  },
-  {
     slug: "mcp-server-developer-kit",
     title: "MCP Server Developer Kit",
     fields: [],

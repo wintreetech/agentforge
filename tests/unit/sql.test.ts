@@ -47,10 +47,10 @@ beforeAll(async () => {
 }, 60_000);
 
 describe("database schema", () => {
-  it("seeds 60 products and 6 categories", async () => {
-    expect((await db.query<{ n: number }>("select count(*)::int as n from products")).rows[0].n).toBe(60);
-    expect((await db.query<{ n: number }>("select count(*)::int as n from categories")).rows[0].n).toBe(6);
-    expect((await db.query<{ n: number }>("select count(*)::int as n from products where status = 'published'")).rows[0].n).toBe(10);
+  it("seeds 50 products and 5 categories", async () => {
+    expect((await db.query<{ n: number }>("select count(*)::int as n from products")).rows[0].n).toBe(50);
+    expect((await db.query<{ n: number }>("select count(*)::int as n from categories")).rows[0].n).toBe(5);
+    expect((await db.query<{ n: number }>("select count(*)::int as n from products where status = 'published'")).rows[0].n).toBe(9);
   });
 
   it("refuses to publish a product without a tested deliverable", async () => {
@@ -77,7 +77,7 @@ describe("database schema", () => {
   it("hides draft products and blocks customers from writing orders", async () => {
     await db.exec("update products set status = 'draft' where slug = 'gmail-inbox-organizer'");
     const r = await as(A, "select count(*)::int as n from products");
-    expect((r.rows[0] as any).n).toBe(59);
+    expect((r.rows[0] as any).n).toBe(49);
     await expect(as(A, `insert into orders (id,user_id,email,subtotal_amount,total_amount,country,provider,digital_consent) values ('x','${A}','x',1,1,'US','s',true)`)).rejects.toThrow(/row-level security/);
   });
 

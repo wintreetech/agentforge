@@ -21,7 +21,6 @@ const TROUBLE: Record<string, string[]> = {
   "ai-pdf-summarizer": ["**“No extractable text”**: the PDF is a scanned image. OCR is not enabled; export a text PDF instead.", "**Encrypted PDF**: remove the password before uploading."],
   "ai-invoice-data-extractor": ["**Missing line items**: lines must read “description quantity unit-price amount”. Paste text if your PDF uses complex tables.", "**Validation ❌**: the document's numbers don't add up, or a field was misread. Check the source."],
   "ai-knowledge-base-agent": ["**“Couldn't find this”**: no passage matched. Rephrase with words used in your documents, or add the right document.", "**Injection warning**: a document contains text addressed to an AI; it was ignored as an instruction."],
-  "multi-agent-research-team": ["**URLs not fetched**: tick the approval box. Only public HTTPS URLs are fetched, max 5.", "**Weak evidence gaps**: add better sources; the writer won't fill gaps with invented facts."],
 };
 
 export default async function ProductDocs({ params }: { params: Promise<{ slug: string }> }) {
@@ -44,7 +43,7 @@ export default async function ProductDocs({ params }: { params: Promise<{ slug: 
     "",
     meta && meta.policy.kind !== "download"
       ? `## Limits, credits and costs\n- Maximum ${meta.policy.budget.maxSteps} steps, ${meta.policy.budget.maxTokens.toLocaleString("en")} tokens, €${meta.policy.budget.maxCostEur} provider cost and ${Math.round(meta.policy.timeoutMs / 1000)} seconds per run.\n- ${p.costNote}\n- Sandbox runs (no provider configured) are free and labelled as simulated.\n- API: \`POST /api/v1/execute/${slug}\` with \`{"input": {…}}\` using the field names above (file inputs are sent as text/pages; see the developer portal).`
-      : `## Package contents (v${p.version})\n${files.map((f) => `- \`${f.path}\``).join("\n")}\n- \`LICENSE-KEY.txt\` with your licence key`,
+      : `## Package contents (v${p.version})\n${files.map((f) => `- \`${f.path}\``).join("\n")}`,
     "",
     "## Troubleshooting",
     ...(TROUBLE[slug] ?? ["**Run stopped with a limit error**: shorten the input or pick a model with a larger context.", "**Provider not configured**: choose the sandbox model or add your own key under Integrations."]).map((t) => `- ${t}`),
@@ -54,8 +53,8 @@ export default async function ProductDocs({ params }: { params: Promise<{ slug: 
       <PageHeader eyebrow="Documentation" title={p.title} intro={`Version ${p.version}. ${p.shortDescription}`} />
       <Container className="max-w-3xl py-12">
         <Markdown source={md} />
-        {slug === "mcp-server-developer-kit" && <p className="mt-6 text-[14px] text-muted">The full README, tool-authoring guide and client setup guide are included in the download. Read the overview in the <Link href="/developers/mcp" className="text-accent-2 underline">MCP integration guide</Link>.</p>}
-        <div className="mt-8 flex gap-3"><LinkButton href={`/products/${slug}`}>Product page</LinkButton>{p.demoAvailable && <LinkButton href={`/playground?product=${slug}`} variant="outline">Try in Playground</LinkButton>}</div>
+        {slug === "mcp-server-developer-kit" && <p className="mt-6 text-[14px] text-muted">The full README, tool-authoring guide and client setup guide are included in the download.</p>}
+        <div className="mt-8 flex gap-3"><LinkButton href={`/products/${slug}`}>Product page</LinkButton></div>
       </Container>
     </>
   );

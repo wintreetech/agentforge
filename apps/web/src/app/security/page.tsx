@@ -10,7 +10,7 @@ const BODY = `## Application security
 - **CSRF**: server actions use Next.js origin checks; cookie-authenticated API routes reject cross-origin requests.
 - **Headers**: Content-Security-Policy, X-Frame-Options DENY, nosniff, strict referrer policy, HSTS in production.
 - **Input validation**: all inputs validated with zod schemas on the server; uploads are type-sniffed by content, size-limited and passed through a malware-scanning hook.
-- **Secrets**: provider keys and credentials come from environment variables; customer-supplied API keys are encrypted with AES-256-GCM; AgentForge API keys are stored as SHA-256 hashes.
+- **Secrets**: provider keys and credentials come from environment variables; customer-supplied AI provider keys are encrypted with AES-256-GCM.
 - **Payments**: hosted checkout only; webhook signatures verified on raw bodies with timestamp tolerance; fulfilment is idempotent per event and never triggered by browser redirects.
 - **Downloads**: signed, short-lived, account-bound URLs; entitlement re-checked at download time.
 

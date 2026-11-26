@@ -14,7 +14,6 @@ export const FUNCTIONAL_SLUGS = [
   "ai-invoice-data-extractor",
   "ai-seo-content-generator",
   "ai-knowledge-base-agent",
-  "multi-agent-research-team",
   "mcp-server-developer-kit",
 ] as const;
 
@@ -31,8 +30,7 @@ export const PRODUCT_SCREENSHOTS: Record<string, string[]> = Object.fromEntries(
     "ai-invoice-data-extractor",
     "ai-seo-content-generator",
     "ai-knowledge-base-agent",
-    "multi-agent-research-team",
-  ].map((s) => [s, [`/screenshots/products/${s}.png`]]),
+  ].map((s) => [s, [`/screenshots/products/${s}.webp`]]),
 );
 
 export function slugify(s: string): string {
@@ -169,7 +167,7 @@ function images(slug: string, title: string): ProductImage[] {
     kind: "screenshot",
   }));
   return [
-    { src: `${base}/cover.svg`, alt: `${title} illustration`, kind: "illustration" },
+    { src: `${base}/cover.webp`, alt: `${title} illustration`, kind: "illustration" },
     ...shots,
     { src: `${base}/workflow.svg`, alt: `How ${title} works, step by step`, kind: "diagram" },
     { src: `${base}/spec.svg`, alt: `${title} inputs and outputs`, kind: "diagram" },
@@ -185,7 +183,6 @@ const PUBLISH_DATES: Record<string, string> = {
   "ai-invoice-data-extractor": "2026-11-21",
   "ai-seo-content-generator": "2026-11-21",
   "ai-knowledge-base-agent": "2026-11-23",
-  "multi-agent-research-team": "2026-11-24",
   "mcp-server-developer-kit": "2026-11-25",
 };
 
@@ -251,15 +248,17 @@ export function buildProducts(): Product[] {
     } satisfies Product;
   });
 
+  // The Multi-Agent Systems category was removed from the store; its raw entries are kept for reference only.
+  const kept = products.filter((p) => p.category !== "multi-agent-systems");
   // Related products: nearest by price within the category, plus one functional product elsewhere.
-  for (const p of products) {
-    const same = products
+  for (const p of kept) {
+    const same = kept
       .filter((o) => o.category === p.category && o.slug !== p.slug)
       .sort((a, b) => Math.abs(a.priceCents - p.priceCents) - Math.abs(b.priceCents - p.priceCents))
       .slice(0, 3)
       .map((o) => o.slug);
-    const cross = products.find((o) => o.functional && o.category !== p.category && !same.includes(o.slug));
+    const cross = kept.find((o) => o.functional && o.category !== p.category && !same.includes(o.slug));
     p.related = cross ? [...same, cross.slug] : same;
   }
-  return products;
+  return kept;
 }

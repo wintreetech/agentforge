@@ -57,8 +57,8 @@ ${body}
 </svg>`;
 }
 
-function panel(x, y, w, h, extra = "") {
-  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="18" fill="#161925" fill-opacity=".86" stroke="#ffffff" stroke-opacity=".09" ${extra}/>`;
+function panel(x, y, w, h, stroke = "#ffffff", strokeOpacity = ".09") {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="18" fill="#161925" fill-opacity=".86" stroke="${stroke}" stroke-opacity="${strokeOpacity}"/>`;
 }
 
 function textLines(x, y, w, n, r, accentId) {
@@ -106,7 +106,7 @@ ${icons[ic](px + 105, py + 100, c.accent2)}
 ${textLines(px + 280, py + 80, 240, lines, r, id)}
 <rect x="${px + 32}" y="${py + 250}" width="496" height="140" rx="14" fill="#0e1018" stroke="${c.accent}" stroke-opacity=".35"/>
 ${textLines(px + 56, py + 278, 440, 4, r, id)}
-${panel(px + 400 + r() * 60, py + 330, 300, 120, `stroke="${c.accent}" stroke-opacity=".5"`)}
+${panel(px + 400 + r() * 60, py + 330, 300, 120, c.accent, ".5")}
 ${icons.spark(px + 430 + r() * 60, py + 350, `url(#ac${id})`).replace('fill="url', 'fill="url')}
 <rect x="${px + 530 + r() * 40}" y="${py + 370}" width="130" height="12" rx="6" fill="#fff" fill-opacity=".5"/>
 <rect x="${px + 530 + r() * 40}" y="${py + 396}" width="90" height="10" rx="5" fill="#fff" fill-opacity=".2"/>`;
@@ -200,7 +200,7 @@ function motifBrackets(p, c, r, id) {
     s += `<rect x="${236 + indent}" y="${200 + i * 34}" width="${40 + r() * 60}" height="13" rx="4" fill="${c.accent}" fill-opacity=".8"/>`;
     s += `<rect x="${290 + indent + r() * 50}" y="${200 + i * 34}" width="${80 + r() * 260}" height="13" rx="4" fill="#fff" fill-opacity="${0.12 + r() * 0.18}"/>`;
   }
-  s += panel(640, 460, 420, 200, `stroke="${c.accent}" stroke-opacity=".55"`);
+  s += panel(640, 460, 420, 200, c.accent, ".55");
   s += `<text x="670" y="508" font-size="17" fill="${c.accent2}" font-family="ui-monospace, Menlo, monospace">$ npm test</text>`;
   s += `<text x="670" y="546" font-size="17" fill="#cfd3e0" font-family="ui-monospace, Menlo, monospace">✓ ${esc(kws[Math.floor(r() * kws.length)])} …</text>`;
   s += `<text x="670" y="584" font-size="17" fill="#cfd3e0" font-family="ui-monospace, Menlo, monospace">✓ ${esc(clip(p.caps[0].toLowerCase(), 28))}</text>`;
@@ -278,6 +278,7 @@ async function write(rel, svg, meta) {
 }
 
 for (const p of rawProducts) {
+  if (p.category === "multi-agent-systems") continue;
   const slug = slugify(p.title);
   const cat = categories.find((x) => x.slug === p.category);
   await write(`products/${slug}/cover.svg`, cover(p), { seed: hash(slug), motif: cat.motif, kind: "product cover" });

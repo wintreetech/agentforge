@@ -111,22 +111,6 @@ export async function setRoleAction(fd: FormData) {
   revalidatePath("/admin/users");
 }
 
-export async function revokeLicenseAction(fd: FormData) {
-  const admin = await requireAdmin();
-  const key = String(fd.get("key"));
-  const reason = String(fd.get("reason") ?? "").trim();
-  if (reason.length < 5) return;
-  await mutate((db) => {
-    const k = db.licenseKeys.find((x) => x.key === key);
-    if (!k) return;
-    k.status = "revoked";
-    const e = db.entitlements.find((x) => x.id === k.entitlementId);
-    if (e) e.status = "revoked";
-  });
-  await audit(admin.id, "license.revoked", key, { reason });
-  revalidatePath("/admin/licenses");
-}
-
 export async function toggleProviderAction(fd: FormData) {
   const admin = await requireAdmin();
   const p = String(fd.get("provider"));
@@ -143,28 +127,12 @@ export async function toggleProviderAction(fd: FormData) {
 
 export async function saveSettingsAction(_: S, fd: FormData): Promise<S> {
   const admin = await requireAdmin();
-  const s = z.object({ demoRunsPerDay: z.coerce.number().int().min(0).max(1000), creditsPerHostedPurchase: z.coerce.number().int().min(0).max(100_000), maintenanceBanner: z.string().max(300) }).safeParse(Object.fromEntries(fd));
+  const s = z.object({ creditsPerHostedPurchase: z.coerce.number().int().min(0).max(100_000), maintenanceBanner: z.string().max(300) }).safeParse(Object.fromEntries(fd));
   if (!s.success) return { error: s.error.issues[0].message };
   await mutate((db) => Object.assign(db.settings, s.data));
   await audit(admin.id, "settings.updated", "platform", s.data);
   revalidatePath("/", "layout");
   return { ok: "Settings saved." };
-}
-
-export async function staffReplyAction(fd: FormData) {
-  const admin = await requireAdmin();
-  const tid = String(fd.get("id"));
-  const body = String(fd.get("body") ?? "").trim().slice(0, 5000);
-  const close = fd.get("close") === "1";
-  await mutate((db) => {
-    const t = db.tickets.find((x) => x.id === tid);
-    if (!t) return;
-    if (body) t.messages.push({ from: "staff", authorId: admin.id, body, at: now() });
-    t.status = close ? "closed" : body ? "answered" : t.status;
-    if (body) db.notifications.push({ id: id("ntf"), userId: t.userId, title: "Support replied", body: t.subject, href: "/dashboard/support", readAt: null, createdAt: now() });
-  });
-  await audit(admin.id, "ticket.replied", tid);
-  revalidatePath("/admin/tickets");
 }
 
 export async function decideSellerAction(fd: FormData) {

@@ -30,7 +30,7 @@ export default async function SandboxCheckout({ params }: { params: Promise<{ se
         <div className="p-6">
           <p className="text-[13px] text-muted">Order {order.id}</p>
           <p className="mt-1 text-3xl font-semibold tabular-nums">{eur2(order.totalCents)}</p>
-          <ul className="mt-4 space-y-1 text-[13.5px] text-muted">{order.items.map((i) => <li key={i.slug}>{i.title} ({i.license})</li>)}</ul>
+          <ul className="mt-4 space-y-1 text-[13.5px] text-muted">{order.items.map((i) => <li key={i.slug}>{i.title}</li>)}</ul>
           {order.status === "pending" ? (
             <div className="mt-6 grid gap-2">
               <form action={completeSandboxPayment}>

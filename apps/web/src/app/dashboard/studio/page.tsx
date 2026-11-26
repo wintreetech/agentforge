@@ -11,7 +11,6 @@ export const metadata = { title: "Agent Studio" };
 
 const STUDIO = [
   { slug: "ai-knowledge-base-agent", title: "AI Knowledge Base Agent" },
-  { slug: "multi-agent-research-team", title: "Multi-Agent Research Team" },
 ];
 
 export default async function Studio({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
@@ -27,7 +26,7 @@ export default async function Studio({ searchParams }: { searchParams: Promise<{
     <>
       <DashHeader title="Agent Studio" intro="Configure purchased agents: instructions, model, knowledge, memory, tools, schedules, webhooks and a visual workflow with approval steps." />
       {sp.error && <Notice tone="danger" className="mb-4">You need to own that agent to configure it.</Notice>}
-      <div className="relative mb-6 overflow-hidden rounded-2xl border border-border">
+      <div data-tour="studio" className="relative mb-6 overflow-hidden rounded-2xl border border-border">
         <Image src="/assets/pages/studio.svg" alt="" width={1200} height={300} className="h-36 w-full object-cover" />
         <div className="absolute inset-0 flex items-center bg-gradient-to-r from-black/70 to-transparent p-6 text-white">
           <div><p className="text-lg font-semibold">Visual workflows with guardrails</p><p className="text-sm opacity-80">AI model · retrieval · extraction · API request · condition · approval · formatting · handoff</p></div>
@@ -35,7 +34,7 @@ export default async function Studio({ searchParams }: { searchParams: Promise<{
       </div>
       {ownedStudio.length === 0 ? (
         <EmptyState title="No configurable agents yet" action={<LinkButton href="/products/ai-knowledge-base-agent">See the Knowledge Base Agent</LinkButton>}>
-          Agent Studio works with agents you own. The Knowledge Base Agent and the Multi-Agent Research Team are available now.
+          Agent Studio works with agents you own. The Knowledge Base Agent is available now.
         </EmptyState>
       ) : (
         <Card className="p-5">

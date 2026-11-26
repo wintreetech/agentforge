@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Create account", robots: { index: fa
 export default async function SignUp() {
   if (await getUser()) redirect("/dashboard");
   return (
-    <AuthShell title="Create your workspace" intro="Free to create. Try products in the Playground; pay only for what you buy.">
+    <AuthShell title="Create your workspace" intro="Free to create. Pay only for what you buy.">
       <SignUpForm googleEnabled={!!env.googleClientId} />
     </AuthShell>
   );

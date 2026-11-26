@@ -118,28 +118,6 @@ describe("product executions (sandbox)", () => {
     expect(miss.output!.markdown).toMatch(/couldn't find/i);
     expect(miss.events.some((e) => e.type === "step" && e.detail?.startsWith("Skipped"))).toBe(true);
   });
-
-  it("research team runs all four agents and does not fetch unapproved URLs", async () => {
-    const ex = example("multi-agent-research-team");
-    const fetched: string[] = [];
-    const docs = String(ex.sources).split(/\n---\n/).map((s, i) => ({ id: `p${i}`, name: s.split("\n")[0], pages: [s] }));
-    const r = await run(
-      "multi-agent-research-team",
-      { question: ex.question, docs, urls: ["https://example.org/a"], approveFetch: false, depth: "standard" },
-      sandbox,
-      { fetchUrl: async (u: string) => (fetched.push(u), { url: u, text: "" }) },
-    );
-    expect(fetched).toHaveLength(0);
-    const agents = new Set(r.events.filter((e) => e.type === "step").map((e: any) => e.agent));
-    expect([...agents]).toEqual(expect.arrayContaining(["Planner", "Researcher", "Critic", "Writer"]));
-    expect(r.output!.markdown).toMatch(/\[S\d/);
-    expect(r.output!.warnings.join(" ")).toMatch(/not fetched/);
-  });
-
-  it("research team fails clearly with no sources", async () => {
-    const r = await run("multi-agent-research-team", { question: "What is the state of the market?", docs: [] });
-    expect(r.error?.code).toBe("no_sources");
-  });
 });
 
 describe("invoice parsing helpers", () => {

@@ -7,7 +7,7 @@ import { fmtDate } from "@/lib/utils";
 export const metadata: Metadata = { title: "Changelog", alternates: { canonical: "/changelog" } };
 
 const PLATFORM = [
-  { date: "2026-11-25", title: "Marketplace foundation", notes: ["60-product catalogue with honest availability", "Shared AI execution engine with budgets and audit events", "Agent Studio with visual workflows and approvals", "Developer API: catalogue, licence verification, execution, usage"] },
+  { date: "2026-11-25", title: "Marketplace foundation", notes: ["50-product catalogue with honest availability", "Shared AI execution engine with budgets and audit events", "Agent Studio with visual workflows and approvals"] },
 ];
 
 export default async function Changelog() {

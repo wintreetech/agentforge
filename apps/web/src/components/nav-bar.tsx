@@ -15,9 +15,9 @@ interface Cat { slug: string; name: string; navLabel: string; tagline: string; a
 interface Feat { slug: string; title: string; priceCents: number; thumbnail: string; short: string }
 
 const RESOURCES = [
+  { href: "/how-it-works", label: "How it works", desc: "The full workflow and a guided tour" },
   { href: "/blog", label: "Blog", desc: "Guides and product notes" },
   { href: "/docs", label: "Documentation", desc: "Set up and use products" },
-  { href: "/developers", label: "Developer portal", desc: "API, webhooks and SDK examples" },
   { href: "/integrations", label: "Integrations", desc: "Supported tools and providers" },
   { href: "/help", label: "Help center", desc: "Answers to common questions" },
   { href: "/changelog", label: "Changelog", desc: "What shipped recently" },
@@ -100,10 +100,10 @@ export function NavBar({ user, cartCount, wishCount, categories, featured }: { u
         </nav>
 
         <div className="ml-auto flex items-center gap-1">
-          <button type="button" onClick={() => setSearch(true)} className="hidden h-9 items-center gap-2 whitespace-nowrap rounded-lg border border-border bg-surface/60 pl-2.5 pr-2 text-[13px] text-subtle transition hover:text-fg 2xl:flex" aria-label="Search products">
+          <button type="button" data-tour="search" onClick={() => setSearch(true)} className="hidden h-9 items-center gap-2 whitespace-nowrap rounded-lg border border-border bg-surface/60 pl-2.5 pr-2 text-[13px] text-subtle transition hover:text-fg 2xl:flex" aria-label="Search products">
             <Search className="size-4" /> Search <kbd className="ml-3 rounded border border-border px-1.5 font-mono text-[10.5px]">Ctrl K</kbd>
           </button>
-          <button type="button" onClick={() => setSearch(true)} className="grid size-9 place-items-center rounded-lg text-muted hover:bg-surface-2 2xl:hidden" aria-label="Search products">
+          <button type="button" data-tour="search" onClick={() => setSearch(true)} className="grid size-9 place-items-center rounded-lg text-muted hover:bg-surface-2 2xl:hidden" aria-label="Search products">
             <Search className="size-[18px]" />
           </button>
           <Link href="/wishlist" className="relative grid size-9 place-items-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-fg" aria-label={`Wishlist, ${wishCount} items`}>
@@ -159,7 +159,7 @@ export function NavBar({ user, cartCount, wishCount, categories, featured }: { u
                   </span>
                 </Link>
               ))}
-              <Link href="/marketplace" className="col-span-2 mt-2 flex items-center gap-1.5 px-3 text-[13px] font-medium text-accent-2">Browse all 60 products <ArrowRight className="size-3.5" /></Link>
+              <Link href="/marketplace" className="col-span-2 mt-2 flex items-center gap-1.5 px-3 text-[13px] font-medium text-accent-2">Browse all products <ArrowRight className="size-3.5" /></Link>
             </div>
             <div className="col-span-5">
               <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-subtle">Available now</p>
@@ -175,7 +175,7 @@ export function NavBar({ user, cartCount, wishCount, categories, featured }: { u
                   </Link>
                 ))}
               </div>
-              <Link href="/playground" className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-accent-2">Try them in the Playground <ArrowRight className="size-3.5" /></Link>
+              <Link href="/marketplace?availability=available" className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-accent-2">All available products <ArrowRight className="size-3.5" /></Link>
             </div>
           </div>
         </div>
@@ -206,7 +206,7 @@ export function NavBar({ user, cartCount, wishCount, categories, featured }: { u
                 <Link key={c.slug} href={`/category/${c.slug}`} className="flex items-center gap-2 rounded-lg px-3 py-2 text-[14px] text-muted hover:bg-surface-2"><span className="size-2 rounded-full" style={{ background: c.accent }} />{c.name}</Link>
               ))}
               <div className="my-3 border-t border-border" />
-              {[["/playground", "AI Playground"], ["/assistant", "Product assistant"], ["/pricing", "Pricing"], ...RESOURCES.map((r) => [r.href, r.label])].map(([h, l]) => (
+              {[["/assistant", "Product assistant"], ["/pricing", "Pricing"], ...RESOURCES.map((r) => [r.href, r.label])].map(([h, l]) => (
                 <Link key={h} href={h} className="block rounded-lg px-3 py-2 text-[14px] text-muted hover:bg-surface-2">{l}</Link>
               ))}
             </nav>

@@ -6,20 +6,11 @@ services:
     env_file: .env
     environment:
       APP_URL: http://localhost:3100
-      AI_SERVICE_URL: http://api:8000
       REDIS_URL: redis://redis:6379
       PRODUCTS_DIR: /app/products
       DATA_DIR: /data
     volumes: ["web-data:/data"]
-    depends_on: [api, redis]
-
-  api:
-    build: { context: ./apps/api, dockerfile: ../../docker/api.Dockerfile }
-    env_file: .env
-    ports: ["8000:8000"]
-    read_only: true
-    tmpfs: ["/tmp"]
-    security_opt: ["no-new-privileges:true"]
+    depends_on: [redis]
 
   db:
     image: pgvector/pgvector:pg17

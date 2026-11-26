@@ -35,8 +35,8 @@ export function RecentlyViewed({ exclude }: { exclude?: string }) {
       <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
         {items.map((i) => (
           <Link key={i.slug} href={`/products/${i.slug}`} className="w-48 shrink-0 overflow-hidden rounded-xl border border-border bg-surface transition hover:border-border-strong">
-            {/* eslint-disable-next-line @next/next/no-img-element -- local SVG thumbnails; avoids image optimizer for a client-only list */}
-            <img src={i.thumbnail} alt="" loading="lazy" className="aspect-[3/2] w-full object-cover" />
+            {/* eslint-disable-next-line @next/next/no-img-element -- local thumbnails; avoids image optimizer for a client-only list */}
+            <img src={i.thumbnail} alt="" loading="lazy" decoding="async" width={900} height={600} className="aspect-[3/2] w-full object-cover" />
             <p className="truncate px-3 py-2 text-[13px]">{i.title}</p>
           </Link>
         ))}

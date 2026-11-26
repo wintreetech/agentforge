@@ -10,7 +10,7 @@ import { audit, mutate, now, read } from "@/lib/db";
 import { newConfig, validateGraph } from "@/lib/studio";
 import { getProduct } from "@/lib/catalog";
 
-const STUDIO_SLUGS = ["ai-knowledge-base-agent", "multi-agent-research-team"];
+const STUDIO_SLUGS = ["ai-knowledge-base-agent"];
 
 export async function createConfigAction(fd: FormData) {
   const user = await requireUser();
@@ -18,7 +18,7 @@ export async function createConfigAction(fd: FormData) {
   const owns = await read((db) => db.entitlements.some((e) => e.userId === user.id && e.slug === slug && e.status === "active"));
   if (!owns || !STUDIO_SLUGS.includes(slug)) redirect("/dashboard/studio?error=not-owned");
   const p = await getProduct(slug);
-  const cfg = newConfig(user.id, slug, `${p?.title ?? slug} workflow`, slug === "multi-agent-research-team" ? "claude-sonnet-5-5" : "claude-haiku-5-5");
+  const cfg = newConfig(user.id, slug, `${p?.title ?? slug} workflow`, "claude-haiku-5-5");
   await mutate((db) => void db.agentConfigs.push(cfg));
   await audit(user.id, "studio.config_created", cfg.id);
   redirect(`/dashboard/studio/${cfg.id}`);

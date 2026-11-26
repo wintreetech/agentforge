@@ -38,14 +38,6 @@ export async function runHealthChecks(): Promise<Check[]> {
   const providers = Object.entries(env.providerKeys).filter(([, v]) => v).map(([k]) => k);
   checks.push({ name: "AI providers", state: providers.length ? "up" : "not_configured", detail: providers.length ? `Keys configured: ${providers.join(", ")} (not probed; probing would incur cost).` : "No provider keys; products run in labelled sandbox mode." });
 
-  if (env.aiServiceUrl) {
-    const py = await timed(async () => {
-      const r = await fetch(`${env.aiServiceUrl}/health`, { signal: AbortSignal.timeout(3000) });
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return "Python AI service healthy.";
-    });
-    checks.push({ name: "Python AI service", state: py.ok ? "up" : "down", detail: py.detail, ms: py.ms });
-  } else checks.push({ name: "Python AI service", state: "not_configured", detail: "AI_SERVICE_URL not set; the TypeScript engine handles all runs." });
 
   checks.push({ name: "Redis (rate limiting, jobs)", state: env.redisUrl ? "up" : "not_configured", detail: env.redisUrl ? "REDIS_URL set; in-process limiter still active (adapter pending)." : "Using in-process rate limiter." });
   checks.push(

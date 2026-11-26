@@ -50,7 +50,7 @@ export default async function Settings() {
 
         <Card className="p-5">
           <p className="font-semibold">Your data</p>
-          <p className="mt-1 text-[13.5px] text-muted">Download a JSON export of your profile, orders, licences, runs, knowledge bases and tickets.</p>
+          <p className="mt-1 text-[13.5px] text-muted">Download a JSON export of your profile, orders, runs and knowledge bases.</p>
           <a href="/api/account/export" className={buttonClass("outline", "sm", "mt-3")} download>Export my data</a>
         </Card>
 

@@ -6,7 +6,7 @@ import { env } from "@/lib/env";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const u = (p: string) => `${env.appUrl}${p}`;
-  const pages = ["", "/marketplace", "/playground", "/assistant", "/pricing", "/enterprise", "/developers", "/developers/api", "/developers/webhooks", "/developers/mcp", "/docs", "/integrations", "/blog", "/about", "/contact", "/help", "/faq", "/security", "/changelog", "/status", "/affiliates", "/sellers", "/careers"];
+  const pages = ["", "/how-it-works", "/marketplace", "/assistant", "/pricing", "/enterprise", "/docs", "/integrations", "/blog", "/about", "/contact", "/help", "/faq", "/security", "/changelog", "/status", "/affiliates", "/sellers", "/careers"];
   return [
     ...pages.map((p) => ({ url: u(p), changeFrequency: "weekly" as const, priority: p === "" ? 1 : 0.6 })),
     ...categories.map((c) => ({ url: u(`/category/${c.slug}`), changeFrequency: "weekly" as const, priority: 0.8 })),

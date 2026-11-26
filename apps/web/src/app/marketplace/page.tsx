@@ -5,7 +5,7 @@ import { Container, PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Marketplace",
-  description: "Browse 60 AI tools, agents, automation workflows, multi-agent systems, business suites and developer kits, priced from €10 to €800.",
+  description: "Browse 50 AI tools, agents, automation workflows, business suites and developer kits, priced from €10 to €800.",
   alternates: { canonical: "/marketplace" },
 };
 

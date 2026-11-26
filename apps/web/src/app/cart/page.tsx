@@ -38,7 +38,6 @@ export default async function CartPage({ searchParams }: { searchParams: Promise
                 </Link>
                 <div className="flex min-w-0 flex-1 flex-col">
                   <Link href={`/products/${l.slug}`} className="font-medium hover:underline">{l.product.title}</Link>
-                  <p className="text-[13px] text-muted">{licenseLabel[l.license]} licence</p>
                   <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
                     {allowsQuantity(l.product) ? (
                       <form action={updateCartAction} className="flex items-center gap-2">

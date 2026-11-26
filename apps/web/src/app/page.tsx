@@ -1,29 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Bot, Boxes, Building2, Code2, FileSearch, Gauge, Layers, ShieldCheck, Workflow, Wrench } from "lucide-react";
+import { ArrowRight, Bot, Building2, FileSearch, Gauge, Layers, ShieldCheck, Workflow, Wrench } from "lucide-react";
 import { categories, allIntegrations } from "@agentforge/catalog";
-import { getRunnable } from "@agentforge/product-registry/fields";
 import { getProducts } from "@/lib/catalog";
-import { availableModels } from "@/lib/execute";
 import { getUser } from "@/lib/auth";
 import { read } from "@/lib/db";
 import { HeroVisual } from "@/components/hero-visual";
 import { ProblemSearch } from "@/components/problem-search";
 import { ProductCard } from "@/components/product-card";
-import { ProductRunner } from "@/components/runner";
+import { StartTourButton } from "@/components/guided-tour";
 import { NewsletterForm } from "@/components/forms";
-import { Badge, Card, Container, LinkButton, SectionHeading } from "@/components/ui";
+import { Badge, Card, Container, LinkButton, SectionHeading, buttonClass } from "@/components/ui";
 import { eur } from "@/lib/utils";
 
 export default async function Home() {
   const [products, user, banner] = await Promise.all([getProducts(), getUser(), read((db) => db.settings.maintenanceBanner)]);
-  const models = await availableModels(user?.id ?? null, true);
   const available = products.filter((p) => p.status === "published");
-  const featured = ["multi-agent-research-team", "ai-knowledge-base-agent", "ai-invoice-data-extractor", "mcp-server-developer-kit", "ai-pdf-summarizer"].map((s) => products.find((p) => p.slug === s)!);
+  const featured = ["ai-knowledge-base-agent", "ai-seo-content-generator", "ai-invoice-data-extractor", "mcp-server-developer-kit", "ai-pdf-summarizer"].map((s) => products.find((p) => p.slug === s)!);
   const newest = [...available].sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "")).slice(0, 4);
   const workflows = products.filter((p) => p.category === "automation-workflows").slice(0, 6);
   const integrations = allIntegrations(products).filter((i) => !/export|clipboard|upload|^Markdown|^JSON|^CSV|^PDF|Any MCP|REST API|Agent Studio|Approved URL|Document upload|TXT/i.test(i)).slice(0, 36);
-  const demoMeta = getRunnable("ai-prompt-optimizer")!;
   const range = (cat: string) => {
     const ps = products.filter((p) => p.category === cat).map((p) => p.priceCents);
     return `${eur(Math.min(...ps))}–${eur(Math.max(...ps))}`;
@@ -33,7 +29,7 @@ export default async function Home() {
     <>
       {banner && <div role="status" className="border-b border-border bg-accent/10 px-4 py-2 text-center text-[13.5px]">{banner}</div>}
       {/* ───────────── Hero ───────────── */}
-      <section className="relative overflow-hidden border-b border-border">
+      <section data-tour="hero" className="relative overflow-hidden border-b border-border">
         <div className="bg-grid pointer-events-none absolute inset-0" />
         <div className="glow pointer-events-none absolute inset-0" />
         <Container className="relative grid grid-cols-1 [&>*]:min-w-0 items-center gap-10 py-16 sm:py-20 lg:grid-cols-[1.05fr_1fr] lg:py-24">
@@ -51,7 +47,7 @@ export default async function Home() {
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <LinkButton href="/marketplace" size="lg">Explore Marketplace <ArrowRight className="size-4" /></LinkButton>
-              <LinkButton href="/playground" size="lg" variant="outline"><Bot className="size-4" /> Try an AI Agent</LinkButton>
+              <StartTourButton className={buttonClass("ghost", "lg")}>Take the tour</StartTourButton>
             </div>
             <div className="mt-9">
               <ProblemSearch large />
@@ -64,7 +60,7 @@ export default async function Home() {
       {/* ───────────── Featured (bento) ───────────── */}
       <Container className="py-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <SectionHeading eyebrow="Featured" title="Built, tested and ready to run" intro="Every product marked Available has a working deliverable you can try before you buy." />
+          <SectionHeading eyebrow="Featured" title="Built, tested and ready to run" intro="Every product marked Available has a working deliverable, ready to use right after purchase." />
           <LinkButton href="/marketplace?availability=available" variant="ghost">All available products <ArrowRight className="size-4" /></LinkButton>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-6 md:grid-rows-2">
@@ -73,7 +69,7 @@ export default async function Home() {
               <Image src={featured[0].thumbnail} alt="" fill sizes="(max-width: 768px) 100vw, 66vw" className="object-cover transition duration-700 group-hover:scale-[1.02]" priority />
             </div>
             <div className="p-6">
-              <div className="flex items-center gap-2"><Badge tone="success">Available</Badge><Badge>Multi-agent</Badge></div>
+              <div className="flex items-center gap-2"><Badge tone="success">Available</Badge><Badge>AI agent</Badge></div>
               <h3 className="mt-3 text-2xl font-semibold tracking-tight">{featured[0].title}</h3>
               <p className="mt-2 max-w-xl text-[14.5px] text-muted">{featured[0].shortDescription}</p>
               <p className="mt-4 flex items-center gap-4 text-sm"><span className="text-lg font-semibold">{eur(featured[0].priceCents)}</span><span className="text-accent-2">View product →</span></p>
@@ -97,7 +93,7 @@ export default async function Home() {
       {/* ───────────── Categories ───────────── */}
       <section className="border-y border-border bg-bg-2/40 py-20">
         <Container>
-          <SectionHeading eyebrow="Explore by category" title="From a €10 tool to a complete AI operation" intro="Six categories, each with at least ten products. Prices scale with scope, not hype." />
+          <SectionHeading eyebrow="Explore by category" title="From a €10 tool to a complete AI operation" intro="Five categories, each with at least ten products. Prices scale with scope, not hype." />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((c, i) => (
               <Link key={c.slug} href={`/category/${c.slug}`} className={`group relative overflow-hidden rounded-2xl border border-border bg-surface ${i === 0 ? "lg:row-span-2" : ""}`}>
@@ -124,35 +120,13 @@ export default async function Home() {
         </div>
       </Container>
 
-      {/* ───────────── Live demo ───────────── */}
-      <section className="relative overflow-hidden border-y border-border py-20">
-        <div className="glow pointer-events-none absolute inset-0 opacity-70" />
-        <Container className="relative">
-          <div className="grid grid-cols-1 [&>*]:min-w-0 gap-10 lg:grid-cols-[1fr_1.6fr]">
-            <div>
-              <SectionHeading eyebrow="Interactive demo" title="Run a real product, right here" intro="This is the actual AI Prompt Optimizer running through the same execution engine as every hosted product: validation, step logging, budgets and streaming." />
-              <ul className="mt-6 space-y-2.5 text-[14px] text-muted">
-                {["Inputs validated on the server", "Each step logged with timing and tokens", "Hard limits on steps, tokens, cost and time", "Sandbox output is always labelled"].map((t) => (
-                  <li key={t} className="flex gap-2.5"><ShieldCheck className="mt-0.5 size-4 shrink-0 text-accent-2" />{t}</li>
-                ))}
-              </ul>
-              <LinkButton href="/playground" variant="outline" className="mt-7">Open the full Playground <ArrowRight className="size-4" /></LinkButton>
-            </div>
-            <Card className="p-5 sm:p-6">
-              <ProductRunner meta={demoMeta} models={models} mode="demo" compact />
-            </Card>
-          </div>
-        </Container>
-      </section>
-
       {/* ───────────── Build your AI workforce ───────────── */}
       <Container className="py-20">
         <SectionHeading eyebrow="Build your AI workforce" title="Start small. Compose as you grow." intro="Each layer builds on the one before, on the same runtime, with the same budgets, approvals and audit trail." />
-        <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-4">
+        <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-3">
           {[
             { icon: Wrench, t: "Tools", d: "One job, done well: extract, summarise, draft.", r: range("ai-micro-tools"), href: "/category/ai-micro-tools" },
             { icon: Bot, t: "Agents", d: "Tools, memory and knowledge working toward a goal.", r: range("ai-agents"), href: "/category/ai-agents" },
-            { icon: Boxes, t: "Teams", d: "Planner, specialists and a critic handing work along.", r: range("multi-agent-systems"), href: "/category/multi-agent-systems" },
             { icon: Building2, t: "Operations", d: "Department-wide systems with approvals and budgets.", r: range("business-solutions"), href: "/category/business-solutions" },
           ].map((s, i) => (
             <Link key={s.t} href={s.href} className="group relative bg-surface p-6 transition hover:bg-surface-2">
@@ -209,11 +183,11 @@ export default async function Home() {
       {/* ───────────── How it works ───────────── */}
       <section className="border-y border-border py-20">
         <Container>
-          <SectionHeading align="center" eyebrow="How it works" title="From problem to running agent in four steps" />
+          <SectionHeading align="center" eyebrow="How it works" title="From problem to running agent in four steps" intro={<><Link href="/how-it-works" className="text-accent-2 underline">See the full workflow</Link> or take the guided tour.</>} />
           <ol className="mt-12 grid gap-6 md:grid-cols-4">
             {[
               { icon: FileSearch, t: "Describe or browse", d: "Search the catalogue or describe your problem to the assistant." },
-              { icon: Gauge, t: "Test before buying", d: "Run demos in the Playground and see per-run cost estimates." },
+              { icon: Gauge, t: "Compare and choose", d: "Clear product pages with features, running costs, specs and reviews." },
               { icon: ShieldCheck, t: "Buy securely", d: "Hosted checkout. Access is granted only after the payment provider confirms." },
               { icon: Layers, t: "Configure and run", d: "Use tools in your dashboard, configure agents in Agent Studio, or download source." },
             ].map((s, i) => (
@@ -245,7 +219,7 @@ export default async function Home() {
 
       {/* ───────────── Bundles + developers + enterprise (bento) ───────────── */}
       <Container className="pb-20">
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid gap-4">
           <Card className="flex flex-col p-6">
             <Badge className="self-start">Bundles</Badge>
             <h3 className="mt-4 text-xl font-semibold tracking-tight">Product bundles</h3>
@@ -259,24 +233,6 @@ export default async function Home() {
               })}
             </ul>
             <LinkButton href="/assistant" variant="outline" className="mt-auto self-start" size="sm">Build a bundle with the assistant</LinkButton>
-          </Card>
-          <Card className="overflow-hidden lg:col-span-2">
-            <div className="grid h-full md:grid-cols-2">
-              <div className="p-6">
-                <Badge tone="success"><Code2 className="size-3" /> Developers</Badge>
-                <h3 className="mt-4 text-xl font-semibold tracking-tight">A developer ecosystem, not a walled garden</h3>
-                <p className="mt-2 text-[13.5px] text-muted">REST API for catalogue, licence verification and runs; signed webhooks; MCP documentation; source-code kits you own.</p>
-                <pre className="mt-5 overflow-x-auto rounded-xl border border-border bg-bg-2 p-3.5 font-mono text-[12px] leading-relaxed text-muted">
-{`curl -X POST ${"$"}AF_URL/api/v1/licenses/verify \\
-  -H "Content-Type: application/json" \\
-  -d '{"key":"AF-XXXXX-XXXXX-XXXXX-XXXX"}'`}
-                </pre>
-                <LinkButton href="/developers" variant="ghost" className="mt-3 -ml-3" size="sm">Developer portal <ArrowRight className="size-3.5" /></LinkButton>
-              </div>
-              <div className="relative min-h-56 border-t border-border md:border-l md:border-t-0">
-                <Image src="/assets/pages/developers.svg" alt="" fill sizes="(max-width:768px) 100vw, 33vw" className="object-cover" />
-              </div>
-            </div>
           </Card>
         </div>
         <Card className="mt-4 overflow-hidden">
